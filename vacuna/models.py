@@ -63,10 +63,10 @@ class Usuario(models.Model):
     password = models.CharField(max_length=150)
 
 
-class Usuario_Vacuna(models.Model):
-    puestoname = models.ForeignKey(Puesto, on_delete=CASCADE)
-    vacunaname = models.ForeignKey(Vacuna, on_delete=CASCADE)
-    usuarioname = models.ForeignKey(Usuario, on_delete=CASCADE)
+class UsuarioVacuna(models.Model):
+    puesto = models.ForeignKey(Puesto, on_delete=CASCADE)
+    vacuna = models.ForeignKey(Vacuna, on_delete=CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=CASCADE)
     cantidaddedosis = models.IntegerField(int)
     periodoentredosisdias = models.IntegerField(int)
 
