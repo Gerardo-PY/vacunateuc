@@ -1,0 +1,47 @@
+/* html {
+    min-height: 100%;
+    position: relative;
+  }
+body {
+  margin: 0;
+  margin-bottom: 40px;
+} */
+/* Cambiar el background-color */
+.navbar-custom {
+    background-color: #164194;
+}
+/* cambiar el color del texto en el menu */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgba(255,255,255,.8);
+}
+/* cambiar el color de los enlaces en el menu */
+.navbar-custom .navbar-nav .nav-link {
+    color: #ffffff;
+    /*font-size: 20px;*/
+}
+/* cambiar el color del enlace activado en el menu */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #009fe3;
+    font-weight: bold;
+    /*font-size: 20px;*/
+}
+
+/* cambia el margen del menu dropdown (cerrar sesion)*/
+.dropdown-menu {
+    margin-left: -50px;
+}
+
+.footer-pg {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /*height: 40px;*/
+}
+
+.logo-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
