@@ -39,3 +39,4 @@ def principal(request, year=datetime.now()):
 
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')
+
