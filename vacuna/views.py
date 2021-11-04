@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-
+from .models import PersonaldeBlanco
 # Create your views here.
 
 def login_user(request):
@@ -39,3 +39,11 @@ def principal(request, year=datetime.now()):
 
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')
+
+def personaldeblanco(request):
+	context = {
+    'personal': PersonaldeBlanco.objects.all(),
+    'title': 'personal'
+	}
+	return render(request, 'vacunateuc/personaldeblanco.html',context)
+

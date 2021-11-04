@@ -1,0 +1,35 @@
+{% extends "vacunateuc/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <table class="table table-bordered">
+      <thead>
+          <br>
+          <br>
+          <tr>
+              <td>Nombre</td>
+              <td>Apellido</td>
+              <td>Registro</td>
+              <td>Direccion</td>
+              <td>Profesion</td>
+              <td>Sede</td>
+          </tr>
+      </thead>
+      
+      <tbody>
+          {% for personal in personal %}
+          <tr>
+              <td>{{personal.nombre}}</td>
+              <td>{{personal.apellido}}</td>
+              <td>{{personal.registro}}</td>
+              <td>{{personal.direccion}}</td>
+              <td>{{personal.profesion}}</td>
+              <td>{{personal.sede}}</td>
+
+          </tr>
+          {% endfor %}
+      </tbody>
+    
+  </table>
+  </div>
+{% endblock %}
