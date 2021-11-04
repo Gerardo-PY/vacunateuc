@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.db.models.expressions import Case
 
@@ -70,6 +71,24 @@ class UsuarioVacuna(models.Model):
     cantidaddedosis = models.IntegerField(int)
     periodoentredosisdias = models.IntegerField(int)
 
+class Profesiones(models.Model):
+    nombre = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.nombre
+
+class PersonalBlanco(models.Model):
+    nombre = models.CharField(max_length=150)
+    apellido = models.CharField(max_length=150)
+    cedula = models.CharField(max_length=100)
+    registro = models.IntegerField()
+    direccion = models.CharField(max_length=150)
+    telefono = models.CharField(max_length=150)
+    profesion = models.ForeignKey(Profesiones, on_delete=CASCADE)
+    sede = models.ForeignKey(Sede, on_delete=CASCADE)
+
+    def __str__(self):
+        return self.nombre
 
 
     
