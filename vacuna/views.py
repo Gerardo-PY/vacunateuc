@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from vacuna.models import PersonalBlanco
 
 # Create your views here.
 
@@ -39,3 +40,9 @@ def principal(request, year=datetime.now()):
 
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')
+
+
+def personalBlanco(request):
+	#personalblanco= PersonalBlanco.objects.all()
+	context = {'personal': PersonalBlanco.objects.all(), 'title': 'personal'}
+	return render(request, 'vacunateuc/personalblanco.html', context)
