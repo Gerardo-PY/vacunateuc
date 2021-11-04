@@ -4,6 +4,11 @@ from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 
+""" Sección añadida para el segundo parcial"""
+from .models import PersonalBlanco 
+
+
+
 # Create your views here.
 
 def login_user(request):
@@ -39,3 +44,10 @@ def principal(request, year=datetime.now()):
 
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')
+
+def personal(request):
+	context = {
+    'personal': PersonalBlanco.objects.all(),
+    'title': 'personal'
+	}
+	return render(request, 'vacunateuc/personal.html', context)
