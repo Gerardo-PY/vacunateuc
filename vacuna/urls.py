@@ -33,4 +33,9 @@ urlpatterns = [
     #path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', views.logout_user, name="logout"),
     path('prueba', views.prueba, name="prueba"),
+<<<<<<< HEAD
+=======
+    path('personalblanco', views.personal, name="personalblanco"),
+
+>>>>>>> 8080a66 (2Parcial)
 ]

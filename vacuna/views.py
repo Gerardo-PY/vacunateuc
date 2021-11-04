@@ -5,6 +5,10 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+<<<<<<< HEAD
+=======
+from .models import PersonalBlanco 
+>>>>>>> 8080a66 (2Parcial)
 
 def login_user(request):
 	if request.method == "POST":
@@ -39,3 +43,13 @@ def principal(request, year=datetime.now()):
 
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')
+
+<<<<<<< HEAD
+=======
+def personal(request):
+	context = {
+    'personal': PersonalBlanco.objects.all(),
+    'title': 'personal'
+	}
+	return render(request, 'vacunateuc/personalblanco.html', context)
+>>>>>>> 8080a66 (2Parcial)
