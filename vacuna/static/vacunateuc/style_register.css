@@ -52,7 +52,12 @@
     justify-content: center;
 }
 
-.btn-primary{
+.btn-register{
     color: white;
     background-color: #164194 !important;
+}
+
+.btn-register:hover, .btn-register:focus, .btn-register:active{
+    color: white;
+    background-color: #2260e0!important;
 }

@@ -80,7 +80,13 @@
         </div>
         <br>
         <button class="w-100 btn btn-lg btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</button>
+        <br>
+        <br>
         <!-- <p class="mt-5 mb-3 text-muted">&copy; 2021 | Vacunate UC</p> -->
+      </form>
+      <form method="POST" action="{% url 'registrousuario' %}">
+        {% csrf_token %}
+          <button class="w-100 btn btn-lg btn-register" type="submit"><i class="bi bi-person-plus-fill"></i> Registrarme</button>
       </form>
     </main>
     

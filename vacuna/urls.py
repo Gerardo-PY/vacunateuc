@@ -34,4 +34,5 @@ urlpatterns = [
     path('logout/', views.logout_user, name="logout"),
     path('prueba', views.prueba, name="prueba"),
     path('personalblanco', views.personalBlanco, name="personalblanco"),
+    path('registrousuario', views.registroUsuarioComun, name="registrousuario"),
 ]

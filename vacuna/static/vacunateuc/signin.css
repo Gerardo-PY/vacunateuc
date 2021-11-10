@@ -41,3 +41,13 @@ body {
 .btn-primary{
   background-color: #164194;
 }
+
+.btn-register{
+  color: white;
+  background-color: #009fe3 !important;
+}
+
+.btn-register:hover, .btn-register:focus, .btn-register:active{
+  color: white;
+  background-color: #00b3ff !important;
+}

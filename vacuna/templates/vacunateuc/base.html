@@ -20,7 +20,7 @@
   <!-- Menú -->
   <nav class="navbar navbar-expand-sm navbar-custom">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand">
             <img src="{% static 'vacunateuc/img/VacunateUC-logo-blanco.svg' %}" alt="" width="50" height="50" class="d-inline-block align-text-center">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,8 @@
       </div>
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.5);">
-        &copy; {{ current_year }} | Vacunate UC
+        <!-- &copy; {{ current_year }} | Vacunate UC -->
+        &copy; {% now "Y" %} | Vacunate UC
       </div>
     </footer>
   </footer>
