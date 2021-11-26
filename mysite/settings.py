@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'vacunateuc',
         'USER': 'root', # agregue su nombre de usuario
-        'PASSWORD': 'Gerar_123', #agregue su contraseña de mysql
+        'PASSWORD': 'oscar4922838', #agregue su contraseña de mysql
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306'
         },

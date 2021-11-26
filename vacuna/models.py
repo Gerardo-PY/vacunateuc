@@ -44,20 +44,26 @@ class Vacuna_Puesto(models.Model):
 class Tipo_de_Enfermedad(models.Model):
     nombre = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.nombre
+
 
 class Vacuna(models.Model):
     nombre = models.CharField(max_length=100)
     tipoenfermedad = models.ForeignKey(Tipo_de_Enfermedad, on_delete=CASCADE)
-    cantidaddosis = models.IntegerField(int)
-    rangoetarioinicio = models.IntegerField(int)
-    rangoetariofin = models.IntegerField(int)
-    periodoentredosis =  models.IntegerField(int)
+    cantidaddosis = models.IntegerField()
+    rangoetarioinicio = models.IntegerField()
+    rangoetariofin = models.IntegerField()
+    periodoentredosis =  models.IntegerField()
+
+    def __str__(self):
+        return self.nombre
 
 
 class Usuario(models.Model):
     nombre = models.CharField(max_length=150)
     apellido = models.CharField(max_length=150)
-    edad = models.IntegerField(int)
+    edad = models.IntegerField()
     cedula = models.CharField(max_length=100)
     ciudad = models.CharField(max_length=150)
     password = models.CharField(max_length=150)
@@ -67,8 +73,8 @@ class UsuarioVacuna(models.Model):
     puesto = models.ForeignKey(Puesto, on_delete=CASCADE)
     vacuna = models.ForeignKey(Vacuna, on_delete=CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=CASCADE)
-    cantidaddedosis = models.IntegerField(int)
-    periodoentredosisdias = models.IntegerField(int)
+    cantidaddedosis = models.IntegerField()
+    periodoentredosisdias = models.IntegerField()
 
 
 
