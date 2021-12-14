@@ -1,7 +1,7 @@
 from django.db import models
-from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.db.models.expressions import Case
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -45,51 +45,42 @@ class Vacuna_Puesto(models.Model):
 class Tipo_de_Enfermedad(models.Model):
     nombre = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.nombre
+
 
 class Vacuna(models.Model):
     nombre = models.CharField(max_length=100)
     tipoenfermedad = models.ForeignKey(Tipo_de_Enfermedad, on_delete=CASCADE)
-    cantidaddosis = models.IntegerField(int)
-    rangoetarioinicio = models.IntegerField(int)
-    rangoetariofin = models.IntegerField(int)
-    periodoentredosis =  models.IntegerField(int)
+    cantidaddosis = models.IntegerField()
+    rangoetarioinicio = models.IntegerField()
+    rangoetariofin = models.IntegerField()
+    periodoentredosis =  models.IntegerField()
+
+    def __str__(self):
+        return self.nombre
 
 
 class Usuario(models.Model):
-    nombre = models.CharField(max_length=150)
-    apellido = models.CharField(max_length=150)
-    edad = models.IntegerField(int)
-    cedula = models.CharField(max_length=100)
-    ciudad = models.CharField(max_length=150)
-    password = models.CharField(max_length=150)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True) # username, password, etc. (usaremos el nro de ci como user)
+    #nombre = models.CharField(max_length=150, verbose_name="Nombre (s)")
+    #apellido = models.CharField(max_length=150, verbose_name="Apellido (s)")
+    fecha_nac = models.DateField(verbose_name="Fecha de nacimiento")
+    departamento = models.CharField(max_length=150, verbose_name="Departamento")
+    ciudad = models.CharField(max_length=150, verbose_name="Ciudad")
+    #if_staff = models.BooleanField(default=False)
+    #password = models.CharField(max_length=150, verbose_name="Contraseña")
+
+    def __str__(self):
+        return f"{self.user.username}"
 
 
 class UsuarioVacuna(models.Model):
     puesto = models.ForeignKey(Puesto, on_delete=CASCADE)
     vacuna = models.ForeignKey(Vacuna, on_delete=CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=CASCADE)
-    cantidaddedosis = models.IntegerField(int)
-    periodoentredosisdias = models.IntegerField(int)
-
-
-class Profesiones(models.Model):
-    nombre = models.CharField(max_length=150)
-
-    def __str__(self):
-        return self.nombre
-
-class PersonalBlanco(models.Model):
-    nombre = models.CharField(max_length=150)
-    apellido = models.CharField(max_length=150)
-    cedula = models.CharField(max_length=150)
-    registro = models.IntegerField()
-    direccion = models.CharField(max_length=150)
-    telefono = models.CharField(max_length=150)
-    profesion = models.ForeignKey(Profesiones, on_delete=CASCADE)
-    sede = models.ForeignKey(Sede, on_delete=CASCADE)
-
-    def __str__(self):
-        return self.nombre
+    cantidaddedosis = models.IntegerField()
+    periodoentredosisdias = models.IntegerField()
 
     
 
