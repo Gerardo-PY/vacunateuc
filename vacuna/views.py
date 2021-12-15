@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
+from django.db import transaction
 
 from .models import Usuario
 
@@ -44,41 +46,44 @@ def prueba(request):
 def registroUsuarioComun(request):
 	
 	if request.method == 'POST':
-		first_name = request.POST.get("first_name")
-		last_name = request.POST.get("last_name")
-		username = request.POST.get("username") # esto es el nro de C.I.
-		password1 = request.POST.get("password1")
-		password2 = request.POST.get("password2")
-		fecha_nac = request.POST.get("fecha_nac")
-		departamento = request.POST.get("departamento")
-		ciudad = request.POST.get("ciudad")
+		with transaction.atomic():
+			first_name = request.POST.get("first_name")
+			last_name = request.POST.get("last_name")
+			username = request.POST.get("username") # esto es el nro de C.I.
+			password1 = request.POST.get("password1")
+			password2 = request.POST.get("password2")
+			fecha_nac = request.POST.get("fecha_nac")
+			#fecha_nac = datetime.now()
+			departamento = request.POST.get("departamento")
+			departamento = "Guaira"
+			ciudad = request.POST.get("ciudad")
 
-		if password1 == password2:
-			# User
-			user = User(
-				username = username,
-				first_name = first_name,
-				last_name = last_name,
-				#password = password1,
-			)
-			user.set_password(password1)
-			user.save()
+			if password1 == password2:
+				# User
+				user = User(
+					username = username,
+					first_name = first_name,
+					last_name = last_name,
+					#password = password1,
+				)
+				user.set_password(password1)
+				user.save()
 
-			# Perfil (Usuario)
-			perfil = Usuario(
-				user = user,
-				fecha_nac = fecha_nac,
-				departamento = departamento,
-				ciudad = ciudad,
-			)
-			perfil.save()
+				# Perfil (Usuario)
+				perfil = Usuario(
+					user = user,
+					fecha_nac = fecha_nac,
+					departamento = departamento,
+					ciudad = ciudad,
+				)
+				perfil.save()
 
-			# logueo directo si hubo un registro correcto
-			user = authenticate(request, username=username, password=password1)
-			login(request, user)
-			return redirect('home')
-		else:
-			messages.success(request, ("Error. Las contraseñas no coinciden"))
+				# logueo directo si hubo un registro correcto
+				user = authenticate(request, username=username, password=password1)
+				login(request, user)
+				return redirect('home')
+			else:
+				messages.success(request, ("Error. Las contraseñas no coinciden"))
 
 	else:
 		messages.success(request, (""))

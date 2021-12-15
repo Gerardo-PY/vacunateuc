@@ -93,7 +93,8 @@
               <!-- <span class="input-group-text"><i class="fas fa-user fa-1x"></i></span> -->
               <div class="input-group-text"><i class="bi bi-calendar3"></i></div>
             </div>
-            <input type="text" class="form-control" id="datepicker" aria-describedby="inputGroupPrepend" name="fecha_nac" required>
+            <input type="date" class="form-control" name="fecha_nac" required></input>
+            <!-- <input type="text" class="form-control" id="datepicker" aria-describedby="inputGroupPrepend" name="fecha_nac" required> -->
             <div class="invalid-feedback">
               Este campo es requerido. Por favor, elija su fecha de nacimiento
             </div>
@@ -110,13 +111,14 @@
         </div> -->
         <div class="col-md-6">
           <label for="validationCustom04" class="form-label">Departamento</label>
-          <select class="form-select" id="validationCustom04" name="departamento" required>
+          <input class="form-control" value="Guaira" name="departamento" disabled required></input>
+          <!-- <select class="form-select" id="validationCustom04" name="departamento" required>
             <option selected disabled value="">Seleccionar...</option>
             <option>
-              <option value="1">Central</option>
-              <option value="2">Guairá</option>
+              <option value="Central">Central</option>
+              <option value="Guaira">Guairá</option>
             </option>
-          </select>
+          </select> -->
           <div class="invalid-feedback">
             Este campo es requerido. Por favor, seleccione su departamento.
           </div>
@@ -164,7 +166,7 @@
       $(function() {
           $('#datepicker').datepicker({
             todayBtn: true,
-            locale: 'es',
+            locale: 'en',
             calendarWeeks: true,
             autoclose: true,
             todayHighlight: true,
