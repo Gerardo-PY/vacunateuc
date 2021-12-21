@@ -112,20 +112,18 @@
         <div class="col-md-6">
           <label for="validationCustom04" class="form-label">Departamento</label>
           <input class="form-control" value="Guaira" name="departamento" disabled required></input>
-          <!-- <select class="form-select" id="validationCustom04" name="departamento" required>
-            <option selected disabled value="">Seleccionar...</option>
-            <option>
-              <option value="Central">Central</option>
-              <option value="Guaira">Guairá</option>
-            </option>
-          </select> -->
           <div class="invalid-feedback">
             Este campo es requerido. Por favor, seleccione su departamento.
           </div>
         </div>
         <div class="col-md-6">
           <label for="validationCustom03" class="form-label">Ciudad</label>
-          <input type="text" class="form-control" id="validationCustom03" name="ciudad" required>
+          <!-- <input type="text" class="form-control" id="validationCustom03" name="ciudad" required> -->
+          <select class="form-select" aria-label="Default select example" name="ciudad">
+            {% for val in ciudad %}
+              <option value="{{ val }}"required>{{ val }}</option>
+            {% endfor %}
+          </select>
           <div class="invalid-feedback">
             Este campo es requerido. Por favor, ingrese su ciudad.
           </div>
@@ -162,35 +160,24 @@
             })
         })()
     </script>
-    <script type="text/javascript">
-      $(function() {
-          $('#datepicker').datepicker({
-            todayBtn: true,
-            locale: 'en',
-            calendarWeeks: true,
-            autoclose: true,
-            todayHighlight: true,
-            toggleActive: true
-          });
-      });
-    </script>
+    
   </body>
   <!-- Inicio Footer -->
-  <!-- <footer class="footer-pg">
+  <footer class="footer-pg">
       <footer class="text-center text-white" style="background-color: #164194;">
         <div class="container p-4 pb-0">
           <section class="logo-footer">
             <img src="{% static 'vacunateuc/img/VacunateUC-logo-blanco.svg' %}" alt="" width="100" height="100" class="align-middle">
           </section>
           <p>Sistema de agendamiendo de vacunación</p>
-        </div> -->
+        </div>
         <!-- Copyright -->
-        <!--<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.5);">-->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.5);">
           <!-- &copy; {{ current_year }} | Vacunate UC -->
-          <!--&copy; {% now "Y" %} | Vacunate UC
+          &copy; {% now "Y" %} | Vacunate UC
         </div>
       </footer>
-  </footer>-->
+  </footer>
   <!-- Fin Footer -->
 
 </html>

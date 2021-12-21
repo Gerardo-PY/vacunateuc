@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.db import transaction
 
-from .models import Usuario
+from .models import Usuario, Ciudades
 
 # Create your views here.
 
@@ -33,14 +33,30 @@ def logout_user(request):
 
 @login_required(login_url='/accounts/login/') #debemos poner la url del login para que redirija a dicho lugar en caso de querer ingresar al home sin estar logueado
 def principal(request):
-    return render(request, 'vacunateuc/home.html')
 
+	staff = request.user.is_staff
+
+	if (staff == False):
+
+		id_user = request.user.id # para obtener el id del user actualmente conectado
+
+		usuario = Usuario.objects.get(user_id=id_user)
+		print("Tu id es")
+		print(id_user)
+		usuario_comun = usuario.fecha_nac
+		print("Tu cumpleaños")
+		print(usuario_comun)
+
+		return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun})
+	else:
+		print("Usuario admin")
+		return render(request, 'vacunateuc/home.html', {})
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')
 
 # def personalBlanco(request):
 # 	#personalblanco= PersonalBlanco.objects.all()
-# 	context = {'personal': PersonalBlanco.objects.all(), 'title': 'personal'}
+# 	context = {'personal': PersonalBlanco.objects.all(), 'title': 'personal'}	
 # 	return render(request, 'vacunateuc/personalblanco.html', context)
 
 def registroUsuarioComun(request):
@@ -57,19 +73,19 @@ def registroUsuarioComun(request):
 			departamento = request.POST.get("departamento")
 			departamento = "Guaira"
 			ciudad = request.POST.get("ciudad")
+			#print(ciudad)
 
 			if password1 == password2:
-				# User
+				# Tabla User Django
 				user = User(
 					username = username,
 					first_name = first_name,
-					last_name = last_name,
-					#password = password1,
+					last_name = last_name,			
 				)
 				user.set_password(password1)
 				user.save()
 
-				# Perfil (Usuario)
+				# Perfil (Tabla Usuario)
 				perfil = Usuario(
 					user = user,
 					fecha_nac = fecha_nac,
@@ -87,7 +103,10 @@ def registroUsuarioComun(request):
 
 	else:
 		messages.success(request, (""))
-	return render(request, 'registration/registrousuario.html', {}) 
+
+	context = {'ciudad': Ciudades.objects.all()}
+	
+	return render(request, 'registration/registrousuario.html', context) 
 
 	
 	# if request.method == 'POST':
@@ -122,5 +141,4 @@ def registroUsuarioComun(request):
 	# else:
 	# 	user_form = UserForm(data=request.POST)
 	# 	#info_form = InfoProfileForm(data=request.POST)
-		
-	
+			

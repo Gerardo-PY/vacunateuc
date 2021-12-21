@@ -37,6 +37,7 @@ class Puesto_Tipo_Vacunatorio(models.Model):
    habilitado = models.BooleanField(default=False)
    modalidadvacunatorio = models.ForeignKey(Modalidad_Vacunatorio, on_delete=CASCADE)
 
+
 #ver que columnas mas se le puede agregar a esta table de Vacuna_Puesto
 class Vacuna_Puesto(models.Model):
     puesto = models.ForeignKey(Puesto, on_delete=CASCADE)
@@ -73,6 +74,7 @@ class Usuario(models.Model):
 
     def __str__(self):
         return f"{self.user.username}"
+        #return str(self.fecha_nac)
 
 
 class UsuarioVacuna(models.Model):
@@ -82,6 +84,11 @@ class UsuarioVacuna(models.Model):
     cantidaddedosis = models.IntegerField()
     periodoentredosisdias = models.IntegerField()
 
+class Ciudades(models.Model):
+    nombre_ciudad = models.CharField(max_length=150, verbose_name= "Ciudad")
+
+    def __str__(self):
+        return self.nombre_ciudad
     
 
 
