@@ -19,7 +19,13 @@
       <div class="col">
         <br>
         <h3>Mis dosis</h3>
-        <p style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </p>
+        
+        {% if nro_dosis >= 1 %}
+          <h4>Enfermedad: {{enfermedad}}</h4>
+        {% else %}
+          
+        {% endif %}
+        <h4 style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </h4>
         {% for message in messages %} 
           <p>{{message}}<b>{{ sigtedosis|date:"l, d F, Y" }}</b></p>
         {% endfor %}

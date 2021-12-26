@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta
 from django.db import transaction
 
-from .models import Usuario, Ciudades, UsuarioVacuna
+from .models import Usuario, Ciudades, UsuarioVacuna, Vacuna, Tipo_de_Enfermedad
 
 # Create your views here.
 
@@ -48,13 +48,30 @@ def principal(request):
 		print(usuario_comun)
 
 		# verificación dosis
-
+		
 		if (UsuarioVacuna.objects.filter(usuario=nro_usuario).exists()):
-			print("Existe")
 			dosis = UsuarioVacuna.objects.get(usuario=nro_usuario)
 			# obtenemos el numero de dosis
 			nro_dosis = dosis.cantidaddedosis
-			# obtenemos el periodo entre cada aplicación de dosis 
+			print("Existe")
+			
+			# obtenemos el periodo entre cada aplicación de dosis
+			
+			# obtenemos la marca de la vacuna para mostrar en pantalla
+			vacuna = dosis.vacuna
+
+			# obtenemos el id de la vacuna
+			id_vacuna = dosis.vacuna_id
+			
+			# consultamos en la tabla Vacuna la existencia del id_vacuna obtenido anteriormente
+			aux1 = Vacuna.objects.get(id=id_vacuna)
+			id_tipoenfermedad = aux1.tipoenfermedad_id # aquí una vez comprobada en el paso anterior la existencia del id_vacuna, obtenemos "tipoenfermedad_id"
+
+			# consultamos en la tabla Enfermedad "tipoenfermedad_id" obtenido anteriormente
+			aux2 = Tipo_de_Enfermedad.objects.get(id=id_tipoenfermedad)
+			enfermedad = aux2.nombre # aquí una vez comprobada en el paso anterior la existencia del id_tipoenfermedad, obtenemos el nombre de la enfermedad.
+			
+
 			periodo_dosis = dosis.periodoentredosisdias
 			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
 				clase = "bi bi-check-circle-fill"
@@ -64,8 +81,18 @@ def principal(request):
 				sigte_dosis = fecha_actual + timedelta(days=periodo_dosis)
 				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar será el: ")
 				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
+
+				diccionario = {
+					'fecha' : usuario_comun,
+					'clase' : clase,
+					'color' : color,
+					'texto' : mensaje_textoPlano,
+					'sigtedosis' : sigte_dosis,
+					'enfermedad' : enfermedad,
+					'nro_dosis' : nro_dosis,
+					}
 				
-				return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano, 'sigtedosis' : sigte_dosis},)
+				return render(request, 'vacunateuc/home.html', diccionario)
 			
 				#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
 
@@ -74,8 +101,16 @@ def principal(request):
 				color = "green"
 				mensaje_textoPlano = "Usted posee la dosis completa."
 				print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
-				
-				return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano,},)
+				diccionario = {
+					'fecha' : usuario_comun,
+					'clase' : clase,
+					'color' : color,
+					'texto' : mensaje_textoPlano,
+					'enfermedad' : enfermedad,
+					'nro_dosis' : nro_dosis,
+					}
+
+				return render(request, 'vacunateuc/home.html', diccionario )
 				
 		else: # para verficar que no tiene ninguna dosis puesta
 			clase = "bi bi-x-circle-fill"
@@ -83,7 +118,14 @@ def principal(request):
 			mensaje_textoPlano = "Usted no posee ninguna dosis."
 			print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
 
-			return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano,},)
+			diccionario = {
+				'fecha' : usuario_comun,
+				'clase' : clase,
+				'color' : color,
+				'texto' : mensaje_textoPlano,
+				}
+
+			return render(request, 'vacunateuc/home.html', diccionario )
 
 
 		#return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano, 'sigtedosis' : sigte_dosis},)
