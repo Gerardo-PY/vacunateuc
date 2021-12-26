@@ -20,6 +20,11 @@
         <br>
         <h3>Mis dosis</h3>
         <p style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </p>
+        {% for message in messages %} 
+          <p>{{message}}<b>{{ sigtedosis|date:"l, d F, Y" }}</b></p>
+        {% endfor %}
+        
+        <!-- <b>{{ sigtedosis|date:"M d, Y" }}</b> -->
       </div>
     </div>
   </div>

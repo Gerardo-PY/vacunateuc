@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from datetime import datetime
+from datetime import date, timedelta
 from django.db import transaction
 
 from .models import Usuario, Ciudades, UsuarioVacuna
@@ -52,26 +52,41 @@ def principal(request):
 		if (UsuarioVacuna.objects.filter(usuario=nro_usuario).exists()):
 			print("Existe")
 			dosis = UsuarioVacuna.objects.get(usuario=nro_usuario)
+			# obtenemos el numero de dosis
 			nro_dosis = dosis.cantidaddedosis
+			# obtenemos el periodo entre cada aplicación de dosis 
+			periodo_dosis = dosis.periodoentredosisdias
 			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
 				clase = "bi bi-check-circle-fill"
 				color = "orange"
 				mensaje_textoPlano = "Usted posee la primera dosis."
+				fecha_actual = date.today()
+				sigte_dosis = fecha_actual + timedelta(days=periodo_dosis)
+				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar será el: ")
 				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
 				
+				return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano, 'sigtedosis' : sigte_dosis},)
+			
+				#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
+
 			elif (nro_dosis == 2): # para verficar que tiene puesta la dosis completa
 				clase = "bi bi-check-circle-fill"
 				color = "green"
 				mensaje_textoPlano = "Usted posee la dosis completa."
 				print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
+				
+				return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano,},)
+				
 		else: # para verficar que no tiene ninguna dosis puesta
 			clase = "bi bi-x-circle-fill"
 			color = "red"
 			mensaje_textoPlano = "Usted no posee ninguna dosis."
 			print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
 
+			return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano,},)
 
-		return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano},)
+
+		#return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano, 'sigtedosis' : sigte_dosis},)
 	else:
 		print("Usuario admin")
 		return render(request, 'vacunateuc/home.html', {})
