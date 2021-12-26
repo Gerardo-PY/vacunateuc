@@ -56,3 +56,16 @@
     color: white;
     background-color: #164194 !important;
 }
+
+.sin-dosis{
+    color: red;
+    font-size: 50px;
+}
+.dosis-incompleta{
+    color: orangered;
+    font-size: 50px;
+}
+.dosis-completa{
+    color: green;
+    font-size: 50px;
+}

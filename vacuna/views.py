@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.db import transaction
 
-from .models import Usuario, Ciudades
+from .models import Usuario, Ciudades, UsuarioVacuna
 
 # Create your views here.
 
@@ -40,17 +40,44 @@ def principal(request):
 
 		id_user = request.user.id # para obtener el id del user actualmente conectado
 
-		usuario = Usuario.objects.get(user_id=id_user)
+		nro_usuario = Usuario.objects.get(user_id=id_user)
 		print("Tu id es")
 		print(id_user)
-		usuario_comun = usuario.fecha_nac
+		usuario_comun = nro_usuario.fecha_nac
 		print("Tu cumpleaños")
 		print(usuario_comun)
 
-		return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun})
+		# verificación dosis
+
+		if (UsuarioVacuna.objects.filter(usuario=nro_usuario).exists()):
+			print("Existe")
+			dosis = UsuarioVacuna.objects.get(usuario=nro_usuario)
+			nro_dosis = dosis.cantidaddedosis
+			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
+				clase = "bi bi-check-circle-fill"
+				color = "orange"
+				mensaje_textoPlano = "Usted posee la primera dosis."
+				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
+				
+			elif (nro_dosis == 2): # para verficar que tiene puesta la dosis completa
+				clase = "bi bi-check-circle-fill"
+				color = "green"
+				mensaje_textoPlano = "Usted posee la dosis completa."
+				print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
+		else: # para verficar que no tiene ninguna dosis puesta
+			clase = "bi bi-x-circle-fill"
+			color = "red"
+			mensaje_textoPlano = "Usted no posee ninguna dosis."
+			print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+
+
+		return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano},)
 	else:
 		print("Usuario admin")
 		return render(request, 'vacunateuc/home.html', {})
+ 
+	
+
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')
 

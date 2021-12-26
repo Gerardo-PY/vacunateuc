@@ -42,6 +42,9 @@ class Puesto_Tipo_Vacunatorio(models.Model):
 class Vacuna_Puesto(models.Model):
     puesto = models.ForeignKey(Puesto, on_delete=CASCADE)
 
+    def __srt__(self):
+        return str(self.puesto.nombre)
+
 
 class Tipo_de_Enfermedad(models.Model):
     nombre = models.CharField(max_length=150)
@@ -51,12 +54,12 @@ class Tipo_de_Enfermedad(models.Model):
 
 
 class Vacuna(models.Model):
-    nombre = models.CharField(max_length=100)
-    tipoenfermedad = models.ForeignKey(Tipo_de_Enfermedad, on_delete=CASCADE)
-    cantidaddosis = models.IntegerField()
-    rangoetarioinicio = models.IntegerField()
-    rangoetariofin = models.IntegerField()
-    periodoentredosis =  models.IntegerField()
+    nombre = models.CharField(max_length=100, verbose_name="Plataforma - Marca")
+    tipoenfermedad = models.ForeignKey(Tipo_de_Enfermedad, on_delete=CASCADE, verbose_name="Tipo de enfermedad")
+    cantidaddosis = models.IntegerField(verbose_name="Cantidad de dosis")
+    rangoetarioinicio = models.IntegerField(verbose_name="Inicio de rango etario")
+    rangoetariofin = models.IntegerField(verbose_name="Fin de rango etario")
+    periodoentredosis =  models.IntegerField(verbose_name="Periodo entre dosis")
 
     def __str__(self):
         return self.nombre
@@ -73,7 +76,8 @@ class Usuario(models.Model):
     #password = models.CharField(max_length=150, verbose_name="Contraseña")
 
     def __str__(self):
-        return f"{self.user.username}"
+        #return f"{self.user.username}"
+        return str(self.user.username)
         #return str(self.fecha_nac)
 
 
@@ -81,8 +85,11 @@ class UsuarioVacuna(models.Model):
     puesto = models.ForeignKey(Puesto, on_delete=CASCADE)
     vacuna = models.ForeignKey(Vacuna, on_delete=CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=CASCADE)
-    cantidaddedosis = models.IntegerField()
-    periodoentredosisdias = models.IntegerField()
+    cantidaddedosis = models.IntegerField(verbose_name="Cantidad de dosis")
+    periodoentredosisdias = models.IntegerField(verbose_name="Periodo entre dosis")
+    
+    def __str__(self):
+        return str(self.usuario.user)
 
 class Ciudades(models.Model):
     nombre_ciudad = models.CharField(max_length=150, verbose_name= "Ciudad")

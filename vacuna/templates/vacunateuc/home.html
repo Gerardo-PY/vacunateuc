@@ -3,16 +3,25 @@
 {% block content %}
 
   <div class="container">
-    <br>
-    <h1> Mi Perfil</h1>
-    <br>
-    <b>Nombre (s): </b>{{user.first_name}}
-    <br>
-    <b>Apellido (s): </b>{{user.last_name}}
-    <br>
-    <b>Número de Documento: </b> {{user.username}}
-    <br>
-    <b>Fecha de nacimiento: </b> {{fecha}}
+    <div class="row">
+      <div class="col">
+        <br>
+        <h1> Mi Perfil</h1>
+        <br>
+        <b>Nombre (s): </b>{{user.first_name}}
+        <br>
+        <b>Apellido (s): </b>{{user.last_name}}
+        <br>
+        <b>Número de Documento: </b> {{user.username}}
+        <br>
+        <b>Fecha de nacimiento: </b> {{fecha}}
+      </div>
+      <div class="col">
+        <br>
+        <h3>Mis dosis</h3>
+        <p style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </p>
+      </div>
+    </div>
   </div>
   
   
