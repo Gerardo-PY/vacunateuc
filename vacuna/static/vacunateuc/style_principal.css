@@ -57,6 +57,11 @@
     background-color: #164194 !important;
 }
 
+.btn-register{
+    color: white;
+    background-color: #009fe3 !important;
+}
+
 .sin-dosis{
     color: red;
     font-size: 50px;

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta
 from django.db import transaction
 
-from .models import Usuario, Ciudades, UsuarioVacuna, Vacuna, Tipo_de_Enfermedad
+from .models import Puesto, Usuario, Ciudades, UsuarioVacuna, Vacuna, Tipo_de_Enfermedad
 
 # Create your views here.
 
@@ -36,16 +36,16 @@ def principal(request):
 
 	staff = request.user.is_staff
 
-	if (staff == False):
+	if (staff == False): # verificación para usuario normal
 
 		id_user = request.user.id # para obtener el id del user actualmente conectado
 
 		nro_usuario = Usuario.objects.get(user_id=id_user)
-		print("Tu id es")
-		print(id_user)
+		print("Tu id es: " + str(id_user))
+		#print(id_user)
 		usuario_comun = nro_usuario.fecha_nac
-		print("Tu cumpleaños")
-		print(usuario_comun)
+		print("Tu cumpleaños es el: " + str(usuario_comun))
+		#print(usuario_comun)
 
 		# verificación dosis
 		
@@ -58,7 +58,7 @@ def principal(request):
 			# obtenemos el periodo entre cada aplicación de dosis
 			
 			# obtenemos la marca de la vacuna para mostrar en pantalla
-			vacuna = dosis.vacuna
+			marca_vacuna = dosis.vacuna
 
 			# obtenemos el id de la vacuna
 			id_vacuna = dosis.vacuna_id
@@ -90,13 +90,15 @@ def principal(request):
 					'sigtedosis' : sigte_dosis,
 					'enfermedad' : enfermedad,
 					'nro_dosis' : nro_dosis,
+					'marca' : marca_vacuna,
+					'titulo_pagina' : "Inicio",
 					}
 				
 				return render(request, 'vacunateuc/home.html', diccionario)
 			
 				#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
 
-			elif (nro_dosis == 2): # para verficar que tiene puesta la dosis completa
+			elif (nro_dosis >= 2): # para verficar que tiene puesta la dosis completa
 				clase = "bi bi-check-circle-fill"
 				color = "green"
 				mensaje_textoPlano = "Usted posee la dosis completa."
@@ -108,6 +110,24 @@ def principal(request):
 					'texto' : mensaje_textoPlano,
 					'enfermedad' : enfermedad,
 					'nro_dosis' : nro_dosis,
+					'marca' : marca_vacuna,
+					'titulo_pagina' : "Inicio",
+					}
+
+				return render(request, 'vacunateuc/home.html', diccionario )
+
+			elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+				clase = "bi bi-x-circle-fill"
+				color = "red"
+				mensaje_textoPlano = "Usted no posee ninguna dosis."
+				print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+
+				diccionario = {
+					'fecha' : usuario_comun,
+					'clase' : clase,
+					'color' : color,
+					'texto' : mensaje_textoPlano,
+					'titulo_pagina' : "Inicio",
 					}
 
 				return render(request, 'vacunateuc/home.html', diccionario )
@@ -123,16 +143,118 @@ def principal(request):
 				'clase' : clase,
 				'color' : color,
 				'texto' : mensaje_textoPlano,
+				'titulo_pagina' : "Inicio",
 				}
 
 			return render(request, 'vacunateuc/home.html', diccionario )
 
+	else: # verificación para usuario admin
+		id_user = request.user.id # para obtener el id del user actualmente conectado
+		nro_usuario = Usuario.objects.get(user_id=id_user)
+		usuario_admin = nro_usuario.fecha_nac
 
-		#return render(request, 'vacunateuc/home.html', {'fecha' : usuario_comun, 'clase' : clase, 'color' : color, 'texto' : mensaje_textoPlano, 'sigtedosis' : sigte_dosis},)
-	else:
+		# verificación dosis
+		
+		if (UsuarioVacuna.objects.filter(usuario=nro_usuario).exists()):
+			dosis = UsuarioVacuna.objects.get(usuario=nro_usuario)
+			# obtenemos el numero de dosis
+			nro_dosis = dosis.cantidaddedosis
+			print("Existe")
+			
+			# obtenemos el periodo entre cada aplicación de dosis
+			
+			# obtenemos la marca de la vacuna para mostrar en pantalla
+			marca_vacuna = dosis.vacuna
+
+			# obtenemos el id de la vacuna
+			id_vacuna = dosis.vacuna_id
+			
+			# consultamos en la tabla Vacuna la existencia del id_vacuna obtenido anteriormente
+			aux1 = Vacuna.objects.get(id=id_vacuna)
+			id_tipoenfermedad = aux1.tipoenfermedad_id # aquí una vez comprobada en el paso anterior la existencia del id_vacuna, obtenemos "tipoenfermedad_id"
+
+			# consultamos en la tabla Enfermedad "tipoenfermedad_id" obtenido anteriormente
+			aux2 = Tipo_de_Enfermedad.objects.get(id=id_tipoenfermedad)
+			enfermedad = aux2.nombre # aquí una vez comprobada en el paso anterior la existencia del id_tipoenfermedad, obtenemos el nombre de la enfermedad.
+			
+
+			periodo_dosis = dosis.periodoentredosisdias
+			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
+				clase = "bi bi-check-circle-fill"
+				color = "orange"
+				mensaje_textoPlano = "Usted posee la primera dosis."
+				fecha_actual = date.today()
+				sigte_dosis = fecha_actual + timedelta(days=periodo_dosis)
+				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar será el: ")
+				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
+
+				diccionario = {
+					'fecha' : usuario_admin,
+					'clase' : clase,
+					'color' : color,
+					'texto' : mensaje_textoPlano,
+					'sigtedosis' : sigte_dosis,
+					'enfermedad' : enfermedad,
+					'nro_dosis' : nro_dosis,
+					'marca' : marca_vacuna,
+					'titulo_pagina' : "Inicio",
+					}
+				
+				return render(request, 'vacunateuc/home.html', diccionario)
+			
+				#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
+
+			elif (nro_dosis >= 2): # para verficar que tiene puesta la dosis completa
+				clase = "bi bi-check-circle-fill"
+				color = "green"
+				mensaje_textoPlano = "Usted posee la dosis completa."
+				print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
+				diccionario = {
+					'fecha' : usuario_admin,
+					'clase' : clase,
+					'color' : color,
+					'texto' : mensaje_textoPlano,
+					'enfermedad' : enfermedad,
+					'nro_dosis' : nro_dosis,
+					'marca' : marca_vacuna,
+					'titulo_pagina' : "Inicio",
+					}
+
+				return render(request, 'vacunateuc/home.html', diccionario )
+
+			elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+				clase = "bi bi-x-circle-fill"
+				color = "red"
+				mensaje_textoPlano = "Usted no posee ninguna dosis."
+				print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+
+				diccionario = {
+					'fecha' : usuario_admin,
+					'clase' : clase,
+					'color' : color,
+					'texto' : mensaje_textoPlano,
+					'titulo_pagina' : "Inicio",
+					}
+
+				return render(request, 'vacunateuc/home.html', diccionario )
+				
+		else: # para verficar que no tiene ninguna dosis puesta
+			clase = "bi bi-x-circle-fill"
+			color = "red"
+			mensaje_textoPlano = "Usted no posee ninguna dosis."
+			print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+
+			diccionario = {
+				'fecha' : usuario_admin,
+				'clase' : clase,
+				'color' : color,
+				'texto' : mensaje_textoPlano,
+				'titulo_pagina' : "Inicio",
+				}
+
+			return render(request, 'vacunateuc/home.html', diccionario )
+
 		print("Usuario admin")
-		return render(request, 'vacunateuc/home.html', {})
- 
 	
 
 def prueba(request):
@@ -188,41 +310,17 @@ def registroUsuarioComun(request):
 	else:
 		messages.success(request, (""))
 
-	context = {'ciudad': Ciudades.objects.all()}
+	context = {'ciudad': Ciudades.objects.all(), 'titulo_pagina' : "Registro de usuario"}
 	
-	return render(request, 'registration/registrousuario.html', context) 
+	return render(request, 'registration/registrousuario.html', context)
 
-	
-	# if request.method == 'POST':
-	# 	first_name = request.POST['first_name']
-	# 	last_name = request.POST['last_name']
-	# 	username = request.POST['username'] # este campo representa la C.I. dela persona, a modo de utiizar como un nombre de usuario único
-	# 	password1 = request.POST['password1']
-	# 	password2 = request.POST['password2']
-	# 	fechanac = request.POST['fechanac']
-	# 	departamento = request.POST['depto']
-	# 	#depto = request.POST['depto']
-	# 	city = request.POST['city']
+@login_required(login_url='/accounts/login/') #debemos poner la url del login para que redirija a dicho lugar en caso de querer ingresar al home sin estar logueado
+def solicitud_vacuna(request):
 
-	# 	if password1 == password2:
-	# 		if Usuario.objects.filter(cedula=username).exists():
-	# 			print('Username taken')
-	# 		else:
-	# 			user = Usuario.objects.create(nombre=first_name, apellido=last_name, fecha_nac=fechanac, cedula=username, ciudad=city, password=password1, departamento = departamento, )
-	# 			user.save()
-	# 			print('Usuario creado')
-	# 	else:
-	# 		print("Las contraseñas no coinciden")
-	# 	return redirect('/accounts/login/')
-	# if request.method == 'POST':
-	# 	user_form=UserForm(data=request.POST)
-		
-	# 	if user_form.is_valid():
-	# 		user_form.save()
-	# 		messages.success(request, ("Usuario registrado con éxito."))
-	# 	else:
-	# 		messages.success(request, ("Hubo un error inesperado. Vuelva a intentarlo."))
-	# else:
-	# 	user_form = UserForm(data=request.POST)
-	# 	#info_form = InfoProfileForm(data=request.POST)
-			
+	context = {
+		'titulo_pagina' : "Solicitud de agendamiento", 
+		'tipo_enfermedad' : Tipo_de_Enfermedad.objects.all(),
+		'marca_vacuna' : Vacuna.objects.all(),
+		'puesto_vacunatorio' : Puesto.objects.all(),
+		}
+	return render(request, 'vacunateuc/solicitudvacuna.html', context)
