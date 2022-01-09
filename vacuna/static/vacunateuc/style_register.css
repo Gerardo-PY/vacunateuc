@@ -1,3 +1,8 @@
+html {
+    min-height: 100%;
+    position: relative;
+}
+
 .navbar-custom {
     background-color: #164194;
 }
@@ -40,7 +45,7 @@
 }
 
 .footer-pg {
-    position: absolute;
+    position:absolute;
     bottom: 0;
     width: 100%;
     /*height: 40px;*/
@@ -52,25 +57,12 @@
     justify-content: center;
 }
 
-.btn-primary{
+.btn-register{
     color: white;
     background-color: #164194 !important;
 }
 
-.btn-register{
+.btn-register:hover, .btn-register:focus, .btn-register:active{
     color: white;
-    background-color: #009fe3 !important;
-}
-
-.sin-dosis{
-    color: red;
-    font-size: 50px;
-}
-.dosis-incompleta{
-    color: orangered;
-    font-size: 50px;
-}
-.dosis-completa{
-    color: green;
-    font-size: 50px;
+    background-color: #2260e0!important;
 }

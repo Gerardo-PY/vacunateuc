@@ -1,0 +1,73 @@
+{% extends "vacunateuc/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <h2>Por favor, rellene el formulario de solicitud para acceder a la vacunación</h2>
+        <form class= "needs-validation" novalidate action="{% url 'solicitudvacuna' %}" method="POST">
+            {% csrf_token %}
+            <div class="col"> <!-- Tipo de enfermedad-->
+                <label for="validationCustom01" class="form-label">¿Contra qué enfermedad deseas vacunarte?</label>
+                <select class="form-select" aria-label="Default select example" name="tipo_de_enfermedad">
+                    {% for val in tipo_enfermedad %}
+                    <option value="{{ val }}"required>{{ val }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                    Este campo es requerido. Por favor, seleccione el tipo de enfermedad.
+                </div>
+            </div>
+            <br>
+            <div class="col"> <!-- Marca de vacuna -->
+                <label for="validationCustom01" class="form-label">¿Que Plataforma/Marca de vacuna deseas aplicarte?</label>
+                <select class="form-select" aria-label="Default select example" name="marca_de_vacuna">
+                    {% for val in marca_vacuna %}
+                    <option value="{{ val }}"required>{{ val }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                    Este campo es requerido. Por favor, seleccione la marca de vacuna.
+                </div>
+            </div>
+            <br>
+            <div class="col"> <!-- Puesto vacunatorio -->
+                <label for="validationCustom01" class="form-label">¿A cuál puesto vacunatorio deseas ir para aplicar la dosis?</label>
+                <select class="form-select" aria-label="Default select example" name="marca_de_vacuna">
+                    {% for val in puesto_vacunatorio %}
+                    <option value="{{ val }}"required>{{ val }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                    Este campo es requerido. Por favor, seleccione la marca de vacuna.
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-lg btn-register" type="submit" href="{% url 'solicitudvacuna' %}"><i class="bi bi-check"></i> Enviar solicitud</button>
+        </form>
+    </div>
+
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+            })
+        })()
+    </script>
+        
+{% endblock %}

@@ -21,3 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('vacuna.urls')),
 ]
+admin.site.site_header = "Administración de Vacunate UC"
+admin.site.site_title = "Vacunate UC"
