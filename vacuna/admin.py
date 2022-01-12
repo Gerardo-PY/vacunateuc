@@ -12,5 +12,11 @@ admin.site.register(Vacuna_Puesto)
 admin.site.register(Tipo_de_Enfermedad)
 admin.site.register(Vacuna)
 admin.site.register(Usuario)
-admin.site.register(UsuarioVacuna)
+
+class UsuarioVacunaAdmin(admin.ModelAdmin):
+    readonly_fields = ('periodoentredosisdias',)
+    list_display = ('usuario','vacuna', 'puesto', 'cantidaddedosis', 'fecha_aplicacion',)
+admin.site.register(UsuarioVacuna, UsuarioVacunaAdmin)
+
 admin.site.register(Ciudades)
+
