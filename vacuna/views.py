@@ -74,12 +74,14 @@ def principal(request):
 
 			periodo_dosis = dosis.periodoentredosisdias
 			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
+				fecha_aplicacion = dosis.fecha_aplicacion
+				print (fecha_aplicacion)
 				clase = "bi bi-check-circle-fill"
 				color = "orange"
 				mensaje_textoPlano = "Usted posee la primera dosis."
-				fecha_actual = date.today()
-				sigte_dosis = fecha_actual + timedelta(days=periodo_dosis)
-				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar será el: ")
+				#fecha_actual = date.today()
+				sigte_dosis = fecha_aplicacion + timedelta(days=periodo_dosis)
+				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar esta estimada para el: ")
 				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
 
 				diccionario = {
