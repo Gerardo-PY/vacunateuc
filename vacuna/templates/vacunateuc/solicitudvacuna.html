@@ -32,7 +32,7 @@
             <br>
             <div class="col"> <!-- Puesto vacunatorio -->
                 <label for="validationCustom01" class="form-label">¿A cuál puesto vacunatorio deseas ir para aplicar la dosis?</label>
-                <select class="form-select" aria-label="Default select example" name="marca_de_vacuna">
+                <select class="form-select" aria-label="Default select example" name="puesto_vacunatorio">
                     {% for val in puesto_vacunatorio %}
                     <option value="{{ val }}"required>{{ val }}</option>
                     {% endfor %}

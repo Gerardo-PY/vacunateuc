@@ -325,4 +325,23 @@ def solicitud_vacuna(request):
 		'marca_vacuna' : Vacuna.objects.all(),
 		'puesto_vacunatorio' : Puesto.objects.all(),
 		}
+	if request.method == 'POST':
+		with transaction.atomic():
+			#tipodeenfermedad=request.POST.get("tipo_de_enfermedad")
+			marcadevacuna=request.POST.get("marca_de_vacuna")
+			puestovacunatorio=request.POST.get("puesto_vacunatorio")
+			usuarioactual=request.user
+			#print(usuarioactual)
+			marca = Vacuna.objects.get(nombre=marcadevacuna)
+			periododosis = marca.periodoentredosis
+			#print(periododosis)
+
+			usuario_vacuna = UsuarioVacuna(
+				puesto = puestovacunatorio,
+				vacuna = marcadevacuna,
+				usuario = usuarioactual,
+				cantidaddedosis = 0,
+				periodoentredosisdias = periododosis
+			)
+			usuario_vacuna.save()
 	return render(request, 'vacunateuc/solicitudvacuna.html', context)
