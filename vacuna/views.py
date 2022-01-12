@@ -325,4 +325,28 @@ def solicitud_vacuna(request):
 		'marca_vacuna' : Vacuna.objects.all(),
 		'puesto_vacunatorio' : Puesto.objects.all(),
 		}
+	if request.method == 'POST':
+		with transaction.atomic(): # esto usamos para evitar que se guarde un registro en caso de que algún campo genere problemas
+			#tipodeenfermedad=request.POST.get("tipo_de_enfermedad")
+			marcadevacuna = request.POST.get("marca_de_vacuna")
+			puestovacunatorio = request.POST.get("puesto_vacuna")
+			usuarioactual = request.user
+			print("#########################")
+			print(marcadevacuna)
+			print(puestovacunatorio)
+			print(usuarioactual)
+			print("#########################")
+			marca = Vacuna.objects.get(nombre=marcadevacuna)
+			periododosis = marca.periodoentredosis
+			#print(periododosis)
+			instancia = Usuario.objects.get(user = usuarioactual)
+
+			usuario_vacuna = UsuarioVacuna(
+				puesto = Puesto.objects.get(nombre = puestovacunatorio),
+				vacuna = Vacuna.objects.get(nombre = marcadevacuna),
+				usuario = instancia,
+				cantidaddedosis = 0,
+				periodoentredosisdias = periododosis
+			)
+			usuario_vacuna.save()
 	return render(request, 'vacunateuc/solicitudvacuna.html', context)

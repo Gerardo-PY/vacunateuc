@@ -1,3 +1,8 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
 .navbar-custom {
     background-color: #164194;
 }
@@ -43,7 +48,7 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    /*height: 40px;*/
+    height: 100px;
 }
 
 .logo-footer{
