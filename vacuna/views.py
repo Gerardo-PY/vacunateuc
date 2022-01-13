@@ -81,7 +81,7 @@ def principal(request):
 				mensaje_textoPlano = "Usted posee la primera dosis."
 				#fecha_actual = date.today()
 				sigte_dosis = fecha_aplicacion + timedelta(days=periodo_dosis)
-				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar esta estimada para el: ")
+				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar está estimada para el: ")
 				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
 
 				diccionario = {
@@ -119,10 +119,21 @@ def principal(request):
 				return render(request, 'vacunateuc/home.html', diccionario )
 
 			elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+				usuarioactual = request.user
+				username1 = User.objects.get(username = usuarioactual)
+				id_username1 = username1.id
+				username2 = Usuario.objects.get(user_id = id_username1)
+				id_username2 = username2.id
+				if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+					username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+					obtiene_estado = username3.estado
+					print(obtiene_estado)
+				else:
+					obtiene_estado = False
 				clase = "bi bi-x-circle-fill"
 				color = "red"
-				mensaje_textoPlano = "Usted no posee ninguna dosis."
-				print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+				mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+				print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 				diccionario = {
 					'fecha' : usuario_comun,
@@ -130,15 +141,28 @@ def principal(request):
 					'color' : color,
 					'texto' : mensaje_textoPlano,
 					'titulo_pagina' : "Inicio",
+					'estado' : obtiene_estado,
+					'nro_dosis' : nro_dosis,
 					}
 
 				return render(request, 'vacunateuc/home.html', diccionario )
 				
 		else: # para verficar que no tiene ninguna dosis puesta
+			usuarioactual = request.user
+			username1 = User.objects.get(username = usuarioactual)
+			id_username1 = username1.id
+			username2 = Usuario.objects.get(user_id = id_username1)
+			id_username2 = username2.id
+			if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+				username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+				obtiene_estado = username3.estado
+				print(obtiene_estado)
+			else:
+				obtiene_estado = False
 			clase = "bi bi-x-circle-fill"
 			color = "red"
-			mensaje_textoPlano = "Usted no posee ninguna dosis."
-			print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+			mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+			print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 			diccionario = {
 				'fecha' : usuario_comun,
@@ -146,6 +170,7 @@ def principal(request):
 				'color' : color,
 				'texto' : mensaje_textoPlano,
 				'titulo_pagina' : "Inicio",
+				'estado' : obtiene_estado
 				}
 
 			return render(request, 'vacunateuc/home.html', diccionario )
@@ -182,12 +207,14 @@ def principal(request):
 
 			periodo_dosis = dosis.periodoentredosisdias
 			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
+				fecha_aplicacion = dosis.fecha_aplicacion
+				print (fecha_aplicacion)
 				clase = "bi bi-check-circle-fill"
 				color = "orange"
 				mensaje_textoPlano = "Usted posee la primera dosis."
-				fecha_actual = date.today()
-				sigte_dosis = fecha_actual + timedelta(days=periodo_dosis)
-				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar será el: ")
+				#fecha_actual = date.today()
+				sigte_dosis = fecha_aplicacion + timedelta(days=periodo_dosis)
+				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar está estimada para el: ")
 				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
 
 				diccionario = {
@@ -227,8 +254,8 @@ def principal(request):
 			elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
 				clase = "bi bi-x-circle-fill"
 				color = "red"
-				mensaje_textoPlano = "Usted no posee ninguna dosis."
-				print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+				mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+				print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 				diccionario = {
 					'fecha' : usuario_admin,
@@ -241,10 +268,13 @@ def principal(request):
 				return render(request, 'vacunateuc/home.html', diccionario )
 				
 		else: # para verficar que no tiene ninguna dosis puesta
+			usuarioactual = request.user
+			estado=UsuarioVacuna.objects.get(usuario= usuarioactual)
+			obtiene_estado=estado.estado
 			clase = "bi bi-x-circle-fill"
 			color = "red"
-			mensaje_textoPlano = "Usted no posee ninguna dosis."
-			print("Usted no posee ninguna dosis") # mensaje para probar nada mas en consola
+			mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+			print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 			diccionario = {
 				'fecha' : usuario_admin,
@@ -252,19 +282,12 @@ def principal(request):
 				'color' : color,
 				'texto' : mensaje_textoPlano,
 				'titulo_pagina' : "Inicio",
+				'estado' : obtiene_estado,
 				}
 
 			return render(request, 'vacunateuc/home.html', diccionario )
 
 		print("Usuario admin")
-		usuarioactual = request.user
-		estado=UsuarioVacuna.objects.get(usuario= usuarioactual)
-		obtieneestado=estado.estado
-		diccionario = {
-				'estado' : obtieneestado
-				}
-		return render(request, 'vacunateuc/home.html', diccionario )
-	
 
 def prueba(request):
 	return render(request, 'vacunateuc/prueba.html')

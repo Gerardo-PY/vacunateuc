@@ -23,28 +23,23 @@
         <br>
         <h1>Mis dosis</h1>
         <br>
+        <h4 style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </h4>
         {% if nro_dosis >= 1 %}
           <h4>Enfermedad: {{enfermedad}}</h4>
           <h4>Marca de vacuna: {{marca}}</h4>
+          {% for message in messages %} 
+            <p>{{message}}<b>{{ sigtedosis|date:"l, d F, Y" }}</b></p>
+          {% endfor %}
+        {% elif nro_dosis == 0 and estado == 1 %}
+          <h5>Usted se encuentra registrado para acceder al esquema de vacunación</h5>
         {% else %}
-          
-        {% endif %}
-        
-        <h4 style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </h4>
-        {% if estado == true %}
-          <a>usted se encuentra registrado para acceder al esquema de vacunacion</a>
-        {% elif nro_dosis == null and estado == false %}
           <a class="btn btn-register" href= "{% url 'solicitudvacuna' %}"><i class="bi bi-plus-circle"></i> Solicitar agendamiento para vacunación</a>
         {% endif %}
-        {% for message in messages %} 
-          <p>{{message}}<b>{{ sigtedosis|date:"l, d F, Y" }}</b></p>
-        {% endfor %}
+        
         
         <!-- <b>{{ sigtedosis|date:"M d, Y" }}</b> -->
       </div>
     </div>
   </div>
-  
-  
 
 {% endblock %}

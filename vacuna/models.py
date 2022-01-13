@@ -86,7 +86,7 @@ class UsuarioVacuna(models.Model):
     vacuna = models.ForeignKey(Vacuna, on_delete=CASCADE, verbose_name="Marca de Vacuna")
     usuario = models.ForeignKey(Usuario, on_delete=CASCADE)
     cantidaddedosis = models.IntegerField(verbose_name="Cantidad de dosis aplicada")
-    periodoentredosisdias = models.IntegerField(verbose_name="Periodo entre dosis", editable=False)
+    periodoentredosisdias = models.IntegerField(verbose_name="Periodo entre dosis")
     fecha_aplicacion = models.DateField(verbose_name="Fecha de aplicación de dosis", null=True)
     estado = models.BooleanField(default=True, verbose_name="Estado")
     
