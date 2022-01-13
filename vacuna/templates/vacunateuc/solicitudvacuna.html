@@ -8,7 +8,8 @@
             {% csrf_token %}
             <div class="col"> <!-- Tipo de enfermedad-->
                 <label for="validationCustom01" class="form-label">¿Contra qué enfermedad deseas vacunarte?</label>
-                <select class="form-select" aria-label="Default select example" name="tipo_de_enfermedad">
+                <select class="form-select" aria-label="Default select example" name="tipo_de_enfermedad" required="required">
+                    <option disabled selected> -- Por favor, seleccione una enfermedad --</option>
                     {% for val in tipo_enfermedad %}
                     <option value="{{ val }}"required>{{ val }}</option>
                     {% endfor %}
@@ -20,7 +21,8 @@
             <br>
             <div class="col"> <!-- Marca de vacuna -->
                 <label for="validationCustom01" class="form-label">¿Que Plataforma/Marca de vacuna deseas aplicarte?</label>
-                <select class="form-select" aria-label="Default select example" name="marca_de_vacuna">
+                <select class="form-select" aria-label="Default select example" name="marca_de_vacuna" required="required">
+                    <option disabled selected> -- Por favor, seleccione una marca de vacuna --</option>
                     {% for val in marca_vacuna %}
                     <option value="{{ val }}"required>{{ val }}</option>
                     {% endfor %}
@@ -32,7 +34,8 @@
             <br>
             <div class="col"> <!-- Puesto vacunatorio -->
                 <label for="validationCustom01" class="form-label">¿A cuál puesto vacunatorio deseas ir para aplicar la dosis?</label>
-                <select class="form-select" aria-label="Default select example" name="puesto_vacunatorio">
+                <select class="form-select" aria-label="Default select example" name="puesto_vacuna" required="required">
+                    <option disabled selected> -- Por favor, seleccione un puesto vacunatorio --</option>
                     {% for val in puesto_vacunatorio %}
                     <option value="{{ val }}"required>{{ val }}</option>
                     {% endfor %}

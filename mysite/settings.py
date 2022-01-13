@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'vacuna',
-    #'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -93,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'vacunateuc',
         'USER': 'root', # agregue su nombre de usuario
-        'PASSWORD': '##TIP42##', #agregue su contraseña de mysql
+        'PASSWORD': 'Gerar_123', #agregue su contraseña de mysql
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306'
         },
