@@ -31,7 +31,9 @@
         {% endif %}
         
         <h4 style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </h4>
-        {% if nro_dosis == null %}
+        {% if estado == true %}
+          <a>usted se encuentra registrado para acceder al esquema de vacunacion</a>
+        {% elif nro_dosis == null and estado == false %}
           <a class="btn btn-register" href= "{% url 'solicitudvacuna' %}"><i class="bi bi-plus-circle"></i> Solicitar agendamiento para vacunación</a>
         {% endif %}
         {% for message in messages %} 

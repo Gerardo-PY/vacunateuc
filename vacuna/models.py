@@ -88,7 +88,7 @@ class UsuarioVacuna(models.Model):
     cantidaddedosis = models.IntegerField(verbose_name="Cantidad de dosis aplicada")
     periodoentredosisdias = models.IntegerField(verbose_name="Periodo entre dosis", editable=False)
     fecha_aplicacion = models.DateField(verbose_name="Fecha de aplicación de dosis", null=True)
-    estado = models.BooleanField(default=False, verbose_name="Estado")
+    estado = models.BooleanField(default=True, verbose_name="Estado")
     
     def __str__(self):
         return str(self.usuario.user)

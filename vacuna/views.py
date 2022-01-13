@@ -257,6 +257,13 @@ def principal(request):
 			return render(request, 'vacunateuc/home.html', diccionario )
 
 		print("Usuario admin")
+		usuarioactual = request.user
+		estado=UsuarioVacuna.objects.get(usuario= usuarioactual)
+		obtieneestado=estado.estado
+		diccionario = {
+				'estado' : obtieneestado
+				}
+		return render(request, 'vacunateuc/home.html', diccionario )
 	
 
 def prueba(request):
@@ -318,7 +325,7 @@ def registroUsuarioComun(request):
 
 @login_required(login_url='/accounts/login/') #debemos poner la url del login para que redirija a dicho lugar en caso de querer ingresar al home sin estar logueado
 def solicitud_vacuna(request):
-
+	
 	context = {
 		'titulo_pagina' : "Solicitud de agendamiento", 
 		'tipo_enfermedad' : Tipo_de_Enfermedad.objects.all(),
@@ -349,4 +356,5 @@ def solicitud_vacuna(request):
 				periodoentredosisdias = periododosis
 			)
 			usuario_vacuna.save()
+			
 	return render(request, 'vacunateuc/solicitudvacuna.html', context)
