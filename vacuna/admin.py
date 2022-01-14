@@ -14,7 +14,7 @@ admin.site.register(Vacuna)
 admin.site.register(Usuario)
 
 class UsuarioVacunaAdmin(admin.ModelAdmin):
-    #readonly_fields = ('periodoentredosisdias',)
+    readonly_fields = ('periodoentredosisdias',)
     list_display = ('usuario','vacuna', 'puesto', 'cantidaddedosis', 'fecha_aplicacion', 'estado',)
 admin.site.register(UsuarioVacuna, UsuarioVacunaAdmin)
 

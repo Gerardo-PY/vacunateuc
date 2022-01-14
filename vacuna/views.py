@@ -379,5 +379,5 @@ def solicitud_vacuna(request):
 				periodoentredosisdias = periododosis
 			)
 			usuario_vacuna.save()
-			
+			return redirect('home')			
 	return render(request, 'vacunateuc/solicitudvacuna.html', context)
