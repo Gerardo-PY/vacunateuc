@@ -41,12 +41,39 @@
                     {% endfor %}
                 </select>
                 <div class="invalid-feedback">
-                    Este campo es requerido. Por favor, seleccione la marca de vacuna.
+                    Este campo es requerido. Por favor, seleccione un puesto vacunatorio.
                 </div>
             </div>
             <br>
             <button class="btn btn-lg btn-register" type="submit" href="{% url 'solicitudvacuna' %}"><i class="bi bi-check"></i> Enviar solicitud</button>
         </form>
+        <br>
+        <h2 style="text-align: center;"><i class="bi bi-clock"></i></h2>
+        <h2 style="text-align: center;">Horarios de atención de puestos vacunatorios</h2>
+        <table class="table table-bordered">
+            <thead>
+                <br>
+                <br>
+                <tr>
+                    <td>Puesto</td>
+                    <td>Sede</td>
+                    <td>Horario de inicio</td>
+                    <td>Horario de finalización</td>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for puesto_vacunatorio in puesto_vacunatorio %}
+                <tr>
+                    <td>{{puesto_vacunatorio.nombre}}</td>
+                    <td>{{puesto_vacunatorio.sede}}</td>
+                    <td>{{puesto_vacunatorio.horario_inicio}}</td>
+                    <td>{{puesto_vacunatorio.horario_fin}}</td>    
+                </tr>
+                {% endfor %}
+            </tbody>
+          
+        </table>
     </div>
 
 

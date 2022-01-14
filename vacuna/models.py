@@ -18,6 +18,8 @@ class Puesto(models.Model):
     nombre = models.CharField(max_length=200)
     habilitado = models.BooleanField(default=False)
     sede = models.ForeignKey(Sede, on_delete=CASCADE)
+    horario_inicio = models.TimeField(verbose_name="Horario de inicio de atención", null=True)
+    horario_fin = models.TimeField(verbose_name="Horario de finalización de atención", null=True)
 
     def __str__(self):
         return self.nombre
@@ -86,7 +88,7 @@ class UsuarioVacuna(models.Model):
     vacuna = models.ForeignKey(Vacuna, on_delete=CASCADE, verbose_name="Marca de Vacuna")
     usuario = models.ForeignKey(Usuario, on_delete=CASCADE)
     cantidaddedosis = models.IntegerField(verbose_name="Cantidad de dosis aplicada")
-    periodoentredosisdias = models.IntegerField(verbose_name="Periodo entre dosis",editable=False)
+    periodoentredosisdias = models.IntegerField(verbose_name="Periodo entre dosis", editable=False)
 
     fecha_aplicacion = models.DateField(verbose_name="Fecha de aplicación de dosis", null=True)
     estado = models.BooleanField(default=True, verbose_name="Estado")

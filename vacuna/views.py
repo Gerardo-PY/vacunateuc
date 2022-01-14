@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta
 from django.db import transaction
+from django.core.exceptions import PermissionDenied
 
 from .models import Puesto, Usuario, Ciudades, UsuarioVacuna, Vacuna, Tipo_de_Enfermedad
 
@@ -349,35 +350,44 @@ def registroUsuarioComun(request):
 @login_required(login_url='/accounts/login/') #debemos poner la url del login para que redirija a dicho lugar en caso de querer ingresar al home sin estar logueado
 def solicitud_vacuna(request):
 	
-	context = {
-		'titulo_pagina' : "Solicitud de agendamiento", 
-		'tipo_enfermedad' : Tipo_de_Enfermedad.objects.all(),
-		'marca_vacuna' : Vacuna.objects.all(),
-		'puesto_vacunatorio' : Puesto.objects.all(),
-		}
-	if request.method == 'POST':
-		with transaction.atomic(): # esto usamos para evitar que se guarde un registro en caso de que algún campo genere problemas
-			#tipodeenfermedad=request.POST.get("tipo_de_enfermedad")
-			marcadevacuna = request.POST.get("marca_de_vacuna")
-			puestovacunatorio = request.POST.get("puesto_vacuna")
-			usuarioactual = request.user
-			print("#########################")
-			print(marcadevacuna)
-			print(puestovacunatorio)
-			print(usuarioactual)
-			print("#########################")
-			marca = Vacuna.objects.get(nombre=marcadevacuna)
-			periododosis = marca.periodoentredosis
-			#print(periododosis)
-			instancia = Usuario.objects.get(user = usuarioactual)
+	id_user = request.user.id # para obtener el id del user actualmente conectado
+	nro_usuario = Usuario.objects.get(user_id=id_user) # nro de usuario
+	
+	if (UsuarioVacuna.objects.filter(usuario=nro_usuario).exists()):
 
-			usuario_vacuna = UsuarioVacuna(
-				puesto = Puesto.objects.get(nombre = puestovacunatorio),
-				vacuna = Vacuna.objects.get(nombre = marcadevacuna),
-				usuario = instancia,
-				cantidaddedosis = 0,
-				periodoentredosisdias = periododosis
-			)
-			usuario_vacuna.save()
-			return redirect('home')			
-	return render(request, 'vacunateuc/solicitudvacuna.html', context)
+		raise PermissionDenied
+
+	else:
+		context = {
+			'titulo_pagina' : "Solicitud de agendamiento", 
+			'tipo_enfermedad' : Tipo_de_Enfermedad.objects.all(),
+			'marca_vacuna' : Vacuna.objects.all(),
+			'puesto_vacunatorio' : Puesto.objects.all(),
+			'title' : 'puesto_vacunatorio',
+			}
+		if request.method == 'POST':
+			with transaction.atomic(): # esto usamos para evitar que se guarde un registro en caso de que algún campo genere problemas
+				#tipodeenfermedad=request.POST.get("tipo_de_enfermedad")
+				marcadevacuna = request.POST.get("marca_de_vacuna")
+				puestovacunatorio = request.POST.get("puesto_vacuna")
+				usuarioactual = request.user
+				print("#########################")
+				print(marcadevacuna)
+				print(puestovacunatorio)
+				print(usuarioactual)
+				print("#########################")
+				marca = Vacuna.objects.get(nombre=marcadevacuna)
+				periododosis = marca.periodoentredosis
+				#print(periododosis)
+				instancia = Usuario.objects.get(user = usuarioactual)
+
+				usuario_vacuna = UsuarioVacuna(
+					puesto = Puesto.objects.get(nombre = puestovacunatorio),
+					vacuna = Vacuna.objects.get(nombre = marcadevacuna),
+					usuario = instancia,
+					cantidaddedosis = 0,
+					periodoentredosisdias = periododosis
+				)
+				usuario_vacuna.save()
+				return redirect('home')			
+		return render(request, 'vacunateuc/solicitudvacuna.html', context)
