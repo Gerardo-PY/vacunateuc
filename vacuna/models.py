@@ -92,9 +92,14 @@ class UsuarioVacuna(models.Model):
 
     fecha_aplicacion = models.DateField(verbose_name="Fecha de aplicación de dosis", null=True)
     estado = models.BooleanField(default=True, verbose_name="Estado")
-    
+
     def __str__(self):
         return str(self.usuario.user)
+    
+    @property
+    def obtenerperiodo(self):
+        aux = str(self.vacuna.periodoentredosis)
+        return aux
 
 class Ciudades(models.Model):
     nombre_ciudad = models.CharField(max_length=150, verbose_name= "Ciudad")

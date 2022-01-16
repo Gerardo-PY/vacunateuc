@@ -6,40 +6,45 @@
 {% block content %}
   
   <div class="container">
+    
+    <br>
+    <h1><i class="bi bi-person-square"></i> Mi Perfil</h1>
+    <hr size="4" style="color: black;">
+    <br>
     <div class="row">
       <div class="col">
+        <h5>Nombre (s): {{user.first_name}}</h5>
         <br>
-        <h1> Mi Perfil</h1>
-        <br>
-        <b>Nombre (s): </b>{{user.first_name}}
-        <br>
-        <b>Apellido (s): </b>{{user.last_name}}
-        <br>
-        <b>Número de Documento: </b> {{user.username}}
-        <br>
-        <b>Fecha de nacimiento: </b> {{fecha}}
+        <h5>Apellido (s): {{user.last_name}}</h5>
       </div>
       <div class="col">
+        <h5>Número de Documento: {{user.username}}</h5>
         <br>
-        <h1>Mis dosis</h1>
-        <br>
-        <h4 style="font-size: 25px; font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </h4>
-        {% if nro_dosis >= 1 %}
-          <h4>Enfermedad: {{enfermedad}}</h4>
-          <h4>Marca de vacuna: {{marca}}</h4>
-          {% for message in messages %} 
-            <p>{{message}}<b>{{ sigtedosis|date:"l, d F, Y" }}</b></p>
-          {% endfor %}
-        {% elif nro_dosis == 0 and estado == 1 %}
-          <h5>Usted se encuentra registrado para acceder al esquema de vacunación</h5>
-        {% else %}
-          <a class="btn btn-register" href= "{% url 'solicitudvacuna' %}"><i class="bi bi-plus-circle"></i> Solicitar agendamiento para vacunación</a>
-        {% endif %}
-        
-        
-        <!-- <b>{{ sigtedosis|date:"M d, Y" }}</b> -->
+        <h5>Fecha de nacimiento: {{fecha}}</h5>
       </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <h1><i class="bi bi-caret-right-fill"></i> Mis dosis</h1>
+    <hr size="4" style="color: black;">
+    <br>
+    <h3 style="font-weight: normal; vertical-align: middle;"><i class="{{clase}}" style="color: {{color}} ;"></i> {{texto}} </h3>
+    {% if nro_dosis >= 1 %}
+      <h4 style="font-weight: normal;">Enfermedad: {{enfermedad}}</h4>
+      <h4 style="font-weight: normal;">Marca de vacuna: {{marca}}</h4>
+      {% for message in messages %} 
+        <h5 style="font-weight: normal;">{{message}}<b>{{ sigtedosis|date:"l, d F, Y" }}</b></h5>
+      {% endfor %}
+    {% elif nro_dosis == 0 and estado == 1 %}
+      <h5 style="font-weight: normal;">Usted se encuentra registrado para acceder al esquema de vacunación</h5>
+    {% else %}
+      <br>
+      <a class="btn btn-register" href= "{% url 'solicitudvacuna' %}"><i class="bi bi-plus-circle"></i> Solicitar agendamiento para vacunación</a>
+    {% endif %}
+    
+    
+    <!-- <b>{{ sigtedosis|date:"M d, Y" }}</b> -->
   </div>
 
 {% endblock %}

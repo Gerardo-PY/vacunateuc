@@ -35,6 +35,10 @@ def logout_user(request):
 @login_required(login_url='/accounts/login/') #debemos poner la url del login para que redirija a dicho lugar en caso de querer ingresar al home sin estar logueado
 def principal(request):
 
+	#getDosis = UsuarioVacuna()
+	
+	#print(getDosis.obtenerperiodo)
+
 	staff = request.user.is_staff
 
 	if (staff == False): # verificación para usuario normal
@@ -253,6 +257,17 @@ def principal(request):
 				return render(request, 'vacunateuc/home.html', diccionario )
 
 			elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+				usuarioactual = request.user
+				username1 = User.objects.get(username = usuarioactual)
+				id_username1 = username1.id
+				username2 = Usuario.objects.get(user_id = id_username1)
+				id_username2 = username2.id
+				if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+					username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+					obtiene_estado = username3.estado
+					print(obtiene_estado)
+				else:
+					obtiene_estado = False
 				clase = "bi bi-x-circle-fill"
 				color = "red"
 				mensaje_textoPlano = "Usted aún no posee ninguna dosis."
@@ -264,14 +279,24 @@ def principal(request):
 					'color' : color,
 					'texto' : mensaje_textoPlano,
 					'titulo_pagina' : "Inicio",
+					'estado' : obtiene_estado,
+					'nro_dosis' : nro_dosis,
 					}
 
 				return render(request, 'vacunateuc/home.html', diccionario )
 				
 		else: # para verficar que no tiene ninguna dosis puesta
 			usuarioactual = request.user
-			estado=UsuarioVacuna.objects.get(usuario= usuarioactual)
-			obtiene_estado=estado.estado
+			username1 = User.objects.get(username = usuarioactual)
+			id_username1 = username1.id
+			username2 = Usuario.objects.get(user_id = id_username1)
+			id_username2 = username2.id
+			if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+				username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+				obtiene_estado = username3.estado
+				print(obtiene_estado)
+			else:
+				obtiene_estado = False
 			clase = "bi bi-x-circle-fill"
 			color = "red"
 			mensaje_textoPlano = "Usted aún no posee ninguna dosis."
@@ -283,7 +308,7 @@ def principal(request):
 				'color' : color,
 				'texto' : mensaje_textoPlano,
 				'titulo_pagina' : "Inicio",
-				'estado' : obtiene_estado,
+				'estado' : obtiene_estado
 				}
 
 			return render(request, 'vacunateuc/home.html', diccionario )
@@ -355,7 +380,8 @@ def solicitud_vacuna(request):
 	
 	if (UsuarioVacuna.objects.filter(usuario=nro_usuario).exists()):
 
-		raise PermissionDenied
+		#raise PermissionDenied
+		return redirect('home')
 
 	else:
 		context = {
