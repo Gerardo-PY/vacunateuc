@@ -6,7 +6,6 @@
 {% block content %}
   
   <div class="container">
-    
     <br>
     <h1><i class="bi bi-person-square"></i> Mi Perfil</h1>
     <hr size="4" style="color: black;">
@@ -37,6 +36,15 @@
         <h5 style="font-weight: normal;">{{message}}<b>{{ sigtedosis|date:"l, d F, Y" }}</b></h5>
       {% endfor %}
     {% elif nro_dosis == 0 and estado == 1 %}
+      <br>
+      <a class="btn btn-register" href= "{% url 'solicitudvacuna' %}"><i class="bi bi-plus-circle"></i> Solicitar agendamiento para vacunación</a>
+      <br>
+      <br>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <br>
       <h5 style="font-weight: normal;">Usted se encuentra registrado para acceder al esquema de vacunación</h5>
     {% else %}
       <br>

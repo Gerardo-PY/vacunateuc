@@ -98,8 +98,8 @@ class UsuarioVacuna(models.Model):
     
     @property
     def obtenerperiodo(self):
-        aux = str(self.vacuna.periodoentredosis)
-        return aux
+        periodo = str(self.vacuna.periodoentredosis)
+        return periodo
 
 class Ciudades(models.Model):
     nombre_ciudad = models.CharField(max_length=150, verbose_name= "Ciudad")

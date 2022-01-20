@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth.models import User
 from django.db.models.fields import NullBooleanField
 from django.http.response import HttpResponse
@@ -35,9 +36,11 @@ def logout_user(request):
 @login_required(login_url='/accounts/login/') #debemos poner la url del login para que redirija a dicho lugar en caso de querer ingresar al home sin estar logueado
 def principal(request):
 
-	#getDosis = UsuarioVacuna()
-	
-	#print(getDosis.obtenerperiodo)
+	# NO TOCAR !!!!!
+	# auxid_user = request.user.id # para obtener el id del user actualmente conectado
+	# auxnro_usuario = Usuario.objects.get(user_id=auxid_user)
+	# getDosis = UsuarioVacuna.objects.filter(usuario = auxnro_usuario)
+	# print(getDosis.obtenerperiodo())
 
 	staff = request.user.is_staff
 
@@ -138,6 +141,7 @@ def principal(request):
 				clase = "bi bi-x-circle-fill"
 				color = "red"
 				mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+				message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
 				print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 				diccionario = {
@@ -148,6 +152,7 @@ def principal(request):
 					'titulo_pagina' : "Inicio",
 					'estado' : obtiene_estado,
 					'nro_dosis' : nro_dosis,
+					'message' : message,
 					}
 
 				return render(request, 'vacunateuc/home.html', diccionario )
@@ -271,6 +276,7 @@ def principal(request):
 				clase = "bi bi-x-circle-fill"
 				color = "red"
 				mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+				message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
 				print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 				diccionario = {
@@ -281,6 +287,7 @@ def principal(request):
 					'titulo_pagina' : "Inicio",
 					'estado' : obtiene_estado,
 					'nro_dosis' : nro_dosis,
+					'message' : message,
 					}
 
 				return render(request, 'vacunateuc/home.html', diccionario )
