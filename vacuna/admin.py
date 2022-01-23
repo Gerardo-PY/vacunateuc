@@ -3,14 +3,28 @@ from django.contrib import admin
 from vacuna.models import Ciudades, Modalidad_Vacunatorio, Puesto, Puesto_Tipo_Vacunatorio, Sede, Tipo_de_Enfermedad, Usuario, UsuarioVacuna, Vacuna, Vacuna_Puesto
 
 # Register your models here.
+class SedeAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'habilitado')
+admin.site.register(Sede, SedeAdmin)
 
-admin.site.register(Sede)
-admin.site.register(Puesto)
-admin.site.register(Modalidad_Vacunatorio)
+class PuestoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'habilitado', 'sede', 'horario_inicio', 'horario_fin')
+admin.site.register(Puesto, PuestoAdmin)
+
+class ModalidadAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'descripcion')
+admin.site.register(Modalidad_Vacunatorio, ModalidadAdmin)
+
 admin.site.register(Puesto_Tipo_Vacunatorio)
 admin.site.register(Vacuna_Puesto)
-admin.site.register(Tipo_de_Enfermedad)
-admin.site.register(Vacuna)
+
+class TipoEnfermedadAdmin(admin.ModelAdmin):
+    list_display = ('nombre',)
+admin.site.register(Tipo_de_Enfermedad, TipoEnfermedadAdmin)
+
+class VacunaAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'tipoenfermedad', 'cantidaddosis', 'periodoentredosis')
+admin.site.register(Vacuna, VacunaAdmin)
 
 class UsuarioAdmin(admin.ModelAdmin):
     list_display = ('user', 'fecha_nac', 'departamento', 'ciudad',)

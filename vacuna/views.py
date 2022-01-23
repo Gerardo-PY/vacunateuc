@@ -346,32 +346,36 @@ def registroUsuarioComun(request):
 			ciudad = request.POST.get("ciudad")
 			#print(ciudad)
 
-			if password1 == password2:
-				# Tabla User Django
-				user = User(
-					username = username,
-					first_name = first_name,
-					last_name = last_name,			
-				)
-				user.set_password(password1)
-				user.save()
-
-				# Perfil (Tabla Usuario)
-				perfil = Usuario(
-					user = user,
-					fecha_nac = fecha_nac,
-					departamento = departamento,
-					ciudad = ciudad,
-				)
-				perfil.save()
-
-				# logueo directo si hubo un registro correcto
-				user = authenticate(request, username=username, password=password1)
-				login(request, user)
-				return redirect('home')
-			else:
-				messages.add_message(request = request, level=messages.SUCCESS, message ="¡ERROR! Las contraseñas no coinciden. Por favor vuelva a intentarlo.")
+			if(User.objects.filter(username=username).exists()):
+				messages.add_message(request = request, level=messages.SUCCESS, message ="¡ERROR! El número de documento " + username + " ya existe. Por favor vuelva a intentarlo.")
 				return redirect('registrousuario')
+			else:
+				if password1 == password2:
+					# Tabla User Django
+					user = User(
+						username = username,
+						first_name = first_name,
+						last_name = last_name,			
+					)
+					user.set_password(password1)
+					user.save()
+
+					# Perfil (Tabla Usuario)
+					perfil = Usuario(
+						user = user,
+						fecha_nac = fecha_nac,
+						departamento = departamento,
+						ciudad = ciudad,
+					)
+					perfil.save()
+
+					# logueo directo si hubo un registro correcto
+					user = authenticate(request, username=username, password=password1)
+					login(request, user)
+					return redirect('home')
+				else:
+					messages.add_message(request = request, level=messages.SUCCESS, message ="¡ERROR! Las contraseñas no coinciden. Por favor vuelva a intentarlo.")
+					return redirect('registrousuario')
 
 	else:
 		messages.success(request, (""))
