@@ -370,7 +370,8 @@ def registroUsuarioComun(request):
 				login(request, user)
 				return redirect('home')
 			else:
-				messages.success(request, ("Error. Las contraseñas no coinciden"))
+				messages.add_message(request = request, level=messages.SUCCESS, message ="¡ERROR! Las contraseñas no coinciden. Por favor vuelva a intentarlo.")
+				return redirect('registrousuario')
 
 	else:
 		messages.success(request, (""))

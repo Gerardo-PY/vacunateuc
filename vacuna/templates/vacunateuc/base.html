@@ -18,7 +18,7 @@
   </head>
 
   <!-- Menú -->
-  <nav class="navbar navbar-expand-sm navbar-custom">
+  <nav class="navbar navbar-expand-sm navbar-custom sticky-top">
       <div class="container-fluid">
         <a class="navbar-brand">
             <img src="{% static 'vacunateuc/img/VacunateUC-logo-blanco.svg' %}" alt="" width="50" height="50" class="d-inline-block align-text-center">
@@ -101,10 +101,32 @@
   <footer class="footer-pg">
     <footer class="text-center text-white" style="background-color: #164194;">
       <div class="container p-4 pb-0">
-        <section class="logo-footer">
-          <img src="{% static 'vacunateuc/img/VacunateUC-logo-blanco.svg' %}" alt="" width="100" height="100" class="align-middle">
-        </section>
-        <p>Sistema de agendamiendo de vacunación</p>
+        <div class="row justify-content-between">
+          <div class="col align-self-start">
+            <div class="col-izq">
+              <h5 style="color: white;"><i class="bi bi-caret-right-fill"></i> Contactos</h5>
+              <h6 style="color: white;">Facultad de Ciencias y Tecnología</h6>
+              <p><i style="color: white;" class="bi bi-telephone-fill"></i> +595 541 43118 | 41154 | 42670 Int. 131</p>
+              <p><i style="color: white;" class="bi bi-whatsapp"></i> +595 971 46 87 52</p>
+              <p><i style="color: white;" class="bi bi-envelope-fill"></i> info.vacunate@uc.edu.py</p>
+              <p><i style="color: white;" class="bi bi-geo-alt-fill"></i> Edificio Histórico UC (Beato Roque González)</p>
+            </div>
+          </div>
+          <div class="col align-self-end">
+            <img src="{% static 'vacunateuc/img/VacunateUC-logo-blanco.svg' %}" alt="" width="60" height="60" class="align-middle">
+            <p>Sistema de agendamiendo de vacunación</p>
+          </div>
+          <div class="col align-self-start">
+            <div class="col-der">
+              <a href="http://guaira.uc.edu.py/" target="_blank">
+                <img src="{% static 'vacunateuc/img/UC-Guaira-abreviada.svg' %}" alt="" width="80" height="80" class="align-middle">
+              </a>
+              <br><br>
+              <a class="redes-logo" href="https://www.facebook.com/cyt.guaira" target="_blank"><i class="bi bi-facebook"></i></a> &nbsp;
+              <a class="redes-logo" href="https://www.instagram.com/cyt.guaira/" target="_blank"><i class="bi bi-instagram"></i></a>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.5);">

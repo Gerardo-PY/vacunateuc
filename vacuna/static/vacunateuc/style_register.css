@@ -72,3 +72,22 @@ body{
     color: white;
     background-color: #2260e0!important;
 }
+
+.col-izq{
+    float: left;
+    text-align: left;
+    line-height: 50%;
+}
+
+.col-der{
+    float: right;
+}
+
+.redes-logo{
+    color: white;
+    font-size: x-large;
+}
+
+.redes-logo:hover, .redes-logo:focus, .redes-logo:active{
+    color: #009fe3;
+  }
