@@ -38,27 +38,24 @@
     {% elif nro_dosis == 0 and estado == 1 %}
       <br>
       <a class="btn btn-register" href= "{% url 'solicitudvacuna' %}"><i class="bi bi-plus-circle"></i> Solicitar agendamiento para vacunación</a>
-      <br>
-      <br>
+      <br><br>
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         {{ message }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      <br>
       <h5 style="font-weight: normal;">Usted se encuentra registrado para acceder al esquema de vacunación</h5>
     {% else %}
       <br>
       <a class="btn btn-register" href= "{% url 'solicitudvacuna' %}"><i class="bi bi-plus-circle"></i> Solicitar agendamiento para vacunación</a>
-      <br><br>
     {% endif %}
     <!-- <br><br>
     <h1 style="text-align: center;"><i class="bi bi-caret-right-fill"></i> Contactos</h1>
     <hr size="4" style="color: black;">
     <br>
     <h5><i style="color: #164194;" class="bi bi-telephone-fill"></i> +595 541 42670</i></h5>
-    <h5><i style="color: #164194" class="bi bi-envelope-fill"></i> info.vacunate@uc.edu.py</h5>
+    <h5><i style="color: #164194" class="bi bi-envelope-fill"></i> info.vacunate@uc.edu.py</h5> -->
 
-    <br><br> -->
+    <br><br> 
     <h2 style="text-align: center; font-style: italic;">¡Vacunate, así salvamos vidas!</h2>
     <br>
     <!-- <b>{{ sigtedosis|date:"M d, Y" }}</b> -->

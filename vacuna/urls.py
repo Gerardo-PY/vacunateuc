@@ -25,7 +25,6 @@ from django.urls.resolvers import URLPattern
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('', views.principal, name='home'),
@@ -37,3 +36,4 @@ urlpatterns = [
     path('registro-usuario/', views.registroUsuarioComun, name="registrousuario"),
     path('solicitud-vacuna/', views.solicitud_vacuna, name='solicitudvacuna')
 ]
+
