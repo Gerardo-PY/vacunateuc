@@ -78,84 +78,135 @@ def principal(request):
 			# consultamos en la tabla Enfermedad "tipoenfermedad_id" obtenido anteriormente
 			aux2 = Tipo_de_Enfermedad.objects.get(id=id_tipoenfermedad)
 			enfermedad = aux2.nombre # aquí una vez comprobada en el paso anterior la existencia del id_tipoenfermedad, obtenemos el nombre de la enfermedad.
-			
 
 			periodo_dosis = dosis.periodoentredosisdias
-			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
-				fecha_aplicacion = dosis.fecha_aplicacion
-				print (fecha_aplicacion)
-				clase = "bi bi-check-circle-fill"
-				color = "orange"
-				mensaje_textoPlano = "Usted posee la primera dosis."
-				#fecha_actual = date.today()
-				sigte_dosis = fecha_aplicacion + timedelta(days=periodo_dosis)
-				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar está estimada para el: ")
-				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
 
-				diccionario = {
-					'fecha' : usuario_comun,
-					'clase' : clase,
-					'color' : color,
-					'texto' : mensaje_textoPlano,
-					'sigtedosis' : sigte_dosis,
-					'enfermedad' : enfermedad,
-					'nro_dosis' : nro_dosis,
-					'marca' : marca_vacuna,
-					'titulo_pagina' : "Inicio",
-					}
+			if(enfermedad == "COVID-19"):
+				if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
+					fecha_aplicacion = dosis.fecha_aplicacion
+					print (fecha_aplicacion)
+					clase = "bi bi-check-circle-fill"
+					color = "orange"
+					mensaje_textoPlano = "Usted posee la primera dosis."
+					#fecha_actual = date.today()
+					sigte_dosis = fecha_aplicacion + timedelta(days=periodo_dosis)
+					messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar está estimada para el: ")
+					print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
+
+					diccionario = {
+						'fecha' : usuario_comun,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'sigtedosis' : sigte_dosis,
+						'enfermedad' : enfermedad,
+						'nro_dosis' : nro_dosis,
+						'marca' : marca_vacuna,
+						'titulo_pagina' : "Inicio",
+						}
+					
+					return render(request, 'vacunateuc/home.html', diccionario)
 				
-				return render(request, 'vacunateuc/home.html', diccionario)
-			
-				#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
+					#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
 
-			elif (nro_dosis >= 2): # para verficar que tiene puesta la dosis completa
-				clase = "bi bi-check-circle-fill"
-				color = "green"
-				mensaje_textoPlano = "Usted posee la dosis completa."
-				print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
-				diccionario = {
-					'fecha' : usuario_comun,
-					'clase' : clase,
-					'color' : color,
-					'texto' : mensaje_textoPlano,
-					'enfermedad' : enfermedad,
-					'nro_dosis' : nro_dosis,
-					'marca' : marca_vacuna,
-					'titulo_pagina' : "Inicio",
-					}
+				elif (nro_dosis >= 2): # para verficar que tiene puesta la dosis completa
+					clase = "bi bi-check-circle-fill"
+					color = "green"
+					mensaje_textoPlano = "Usted posee la dosis completa."
+					print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
+					diccionario = {
+						'fecha' : usuario_comun,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'enfermedad' : enfermedad,
+						'nro_dosis' : nro_dosis,
+						'marca' : marca_vacuna,
+						'titulo_pagina' : "Inicio",
+						}
 
-				return render(request, 'vacunateuc/home.html', diccionario )
+					return render(request, 'vacunateuc/home.html', diccionario )
 
-			elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
-				usuarioactual = request.user
-				username1 = User.objects.get(username = usuarioactual)
-				id_username1 = username1.id
-				username2 = Usuario.objects.get(user_id = id_username1)
-				id_username2 = username2.id
-				if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
-					username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
-					obtiene_estado = username3.estado
-					print(obtiene_estado)
-				else:
-					obtiene_estado = False
-				clase = "bi bi-x-circle-fill"
-				color = "red"
-				mensaje_textoPlano = "Usted aún no posee ninguna dosis."
-				message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
-				print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
+				elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+					usuarioactual = request.user
+					username1 = User.objects.get(username = usuarioactual)
+					id_username1 = username1.id
+					username2 = Usuario.objects.get(user_id = id_username1)
+					id_username2 = username2.id
+					if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+						username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+						obtiene_estado = username3.estado
+						print(obtiene_estado)
+					else:
+						obtiene_estado = False
+					clase = "bi bi-x-circle-fill"
+					color = "red"
+					mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+					message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
+					print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
-				diccionario = {
-					'fecha' : usuario_comun,
-					'clase' : clase,
-					'color' : color,
-					'texto' : mensaje_textoPlano,
-					'titulo_pagina' : "Inicio",
-					'estado' : obtiene_estado,
-					'nro_dosis' : nro_dosis,
-					'message' : message,
-					}
+					diccionario = {
+						'fecha' : usuario_comun,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'titulo_pagina' : "Inicio",
+						'estado' : obtiene_estado,
+						'nro_dosis' : nro_dosis,
+						'message' : message,
+						}
 
-				return render(request, 'vacunateuc/home.html', diccionario )
+					return render(request, 'vacunateuc/home.html', diccionario )
+			# verificación para otras enfermedades
+			else:
+				if (nro_dosis >= 1): # para verficar que tiene puesta la primera dosis
+					clase = "bi bi-check-circle-fill"
+					color = "green"
+					mensaje_textoPlano = "Usted posee la dosis completa."
+					print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
+					diccionario = {
+						'fecha' : usuario_comun,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'enfermedad' : enfermedad,
+						'nro_dosis' : nro_dosis,
+						'marca' : marca_vacuna,
+						'titulo_pagina' : "Inicio",
+						}
+
+					return render(request, 'vacunateuc/home.html', diccionario )
+				
+				elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+					usuarioactual = request.user
+					username1 = User.objects.get(username = usuarioactual)
+					id_username1 = username1.id
+					username2 = Usuario.objects.get(user_id = id_username1)
+					id_username2 = username2.id
+					if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+						username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+						obtiene_estado = username3.estado
+						print(obtiene_estado)
+					else:
+						obtiene_estado = False
+					clase = "bi bi-x-circle-fill"
+					color = "red"
+					mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+					message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
+					print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
+
+					diccionario = {
+						'fecha' : usuario_comun,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'titulo_pagina' : "Inicio",
+						'estado' : obtiene_estado,
+						'nro_dosis' : nro_dosis,
+						'message' : message,
+						}
+
+					return render(request, 'vacunateuc/home.html', diccionario )
 				
 		else: # para verficar que no tiene ninguna dosis puesta
 			usuarioactual = request.user
@@ -214,84 +265,136 @@ def principal(request):
 			aux2 = Tipo_de_Enfermedad.objects.get(id=id_tipoenfermedad)
 			enfermedad = aux2.nombre # aquí una vez comprobada en el paso anterior la existencia del id_tipoenfermedad, obtenemos el nombre de la enfermedad.
 			
-
 			periodo_dosis = dosis.periodoentredosisdias
-			if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
-				fecha_aplicacion = dosis.fecha_aplicacion
-				print (fecha_aplicacion)
-				clase = "bi bi-check-circle-fill"
-				color = "orange"
-				mensaje_textoPlano = "Usted posee la primera dosis."
-				#fecha_actual = date.today()
-				sigte_dosis = fecha_aplicacion + timedelta(days=periodo_dosis)
-				messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar está estimada para el: ")
-				print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
-
-				diccionario = {
-					'fecha' : usuario_admin,
-					'clase' : clase,
-					'color' : color,
-					'texto' : mensaje_textoPlano,
-					'sigtedosis' : sigte_dosis,
-					'enfermedad' : enfermedad,
-					'nro_dosis' : nro_dosis,
-					'marca' : marca_vacuna,
-					'titulo_pagina' : "Inicio",
-					}
-				
-				return render(request, 'vacunateuc/home.html', diccionario)
 			
-				#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
+			if(enfermedad == "COVID-19"):
 
-			elif (nro_dosis >= 2): # para verficar que tiene puesta la dosis completa
-				clase = "bi bi-check-circle-fill"
-				color = "green"
-				mensaje_textoPlano = "Usted posee la dosis completa."
-				print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
-				diccionario = {
-					'fecha' : usuario_admin,
-					'clase' : clase,
-					'color' : color,
-					'texto' : mensaje_textoPlano,
-					'enfermedad' : enfermedad,
-					'nro_dosis' : nro_dosis,
-					'marca' : marca_vacuna,
-					'titulo_pagina' : "Inicio",
-					}
+				if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
+					fecha_aplicacion = dosis.fecha_aplicacion
+					print (fecha_aplicacion)
+					clase = "bi bi-check-circle-fill"
+					color = "orange"
+					mensaje_textoPlano = "Usted posee la primera dosis."
+					#fecha_actual = date.today()
+					sigte_dosis = fecha_aplicacion + timedelta(days=periodo_dosis)
+					messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar está estimada para el: ")
+					print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
 
-				return render(request, 'vacunateuc/home.html', diccionario )
-
-			elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
-				usuarioactual = request.user
-				username1 = User.objects.get(username = usuarioactual)
-				id_username1 = username1.id
-				username2 = Usuario.objects.get(user_id = id_username1)
-				id_username2 = username2.id
-				if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
-					username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
-					obtiene_estado = username3.estado
-					print(obtiene_estado)
-				else:
-					obtiene_estado = False
-				clase = "bi bi-x-circle-fill"
-				color = "red"
-				mensaje_textoPlano = "Usted aún no posee ninguna dosis."
-				message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
-				print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
-
-				diccionario = {
-					'fecha' : usuario_admin,
-					'clase' : clase,
-					'color' : color,
-					'texto' : mensaje_textoPlano,
-					'titulo_pagina' : "Inicio",
-					'estado' : obtiene_estado,
-					'nro_dosis' : nro_dosis,
-					'message' : message,
-					}
-
-				return render(request, 'vacunateuc/home.html', diccionario )
+					diccionario = {
+						'fecha' : usuario_admin,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'sigtedosis' : sigte_dosis,
+						'enfermedad' : enfermedad,
+						'nro_dosis' : nro_dosis,
+						'marca' : marca_vacuna,
+						'titulo_pagina' : "Inicio",
+						}
+					
+					return render(request, 'vacunateuc/home.html', diccionario)
 				
+					#mensajeSigteDosis = "Su siguiente dosis a aplicar será el: " + str(sigte_dosis)
+
+				elif (nro_dosis >= 2): # para verficar que tiene puesta la dosis completa
+					clase = "bi bi-check-circle-fill"
+					color = "green"
+					mensaje_textoPlano = "Usted posee la dosis completa."
+					print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
+					diccionario = {
+						'fecha' : usuario_admin,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'enfermedad' : enfermedad,
+						'nro_dosis' : nro_dosis,
+						'marca' : marca_vacuna,
+						'titulo_pagina' : "Inicio",
+						}
+
+					return render(request, 'vacunateuc/home.html', diccionario )
+
+				elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+					usuarioactual = request.user
+					username1 = User.objects.get(username = usuarioactual)
+					id_username1 = username1.id
+					username2 = Usuario.objects.get(user_id = id_username1)
+					id_username2 = username2.id
+					if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+						username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+						obtiene_estado = username3.estado
+						print(obtiene_estado)
+					else:
+						obtiene_estado = False
+					clase = "bi bi-x-circle-fill"
+					color = "red"
+					mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+					message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
+					print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
+
+					diccionario = {
+						'fecha' : usuario_admin,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'titulo_pagina' : "Inicio",
+						'estado' : obtiene_estado,
+						'nro_dosis' : nro_dosis,
+						'message' : message,
+						}
+
+					return render(request, 'vacunateuc/home.html', diccionario )
+			# verificación para otras enfermedades
+			else:
+				if (nro_dosis >= 1): # para verficar que tiene puesta la primera dosis
+					clase = "bi bi-check-circle-fill"
+					color = "green"
+					mensaje_textoPlano = "Usted posee la dosis completa."
+					print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
+					diccionario = {
+						'fecha' : usuario_admin,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'enfermedad' : enfermedad,
+						'nro_dosis' : nro_dosis,
+						'marca' : marca_vacuna,
+						'titulo_pagina' : "Inicio",
+						}
+
+					return render(request, 'vacunateuc/home.html', diccionario )
+				
+				elif (nro_dosis == 0): # para verficar que no tiene ninguna dosis puesta
+					usuarioactual = request.user
+					username1 = User.objects.get(username = usuarioactual)
+					id_username1 = username1.id
+					username2 = Usuario.objects.get(user_id = id_username1)
+					id_username2 = username2.id
+					if (UsuarioVacuna.objects.filter(usuario_id = id_username2).exists()):
+						username3 = UsuarioVacuna.objects.get(usuario_id = id_username2)
+						obtiene_estado = username3.estado
+						print(obtiene_estado)
+					else:
+						obtiene_estado = False
+					clase = "bi bi-x-circle-fill"
+					color = "red"
+					mensaje_textoPlano = "Usted aún no posee ninguna dosis."
+					message = "¡ATENCIÓN! Usted ya ha solicitado un agendamiento para la vacunación."
+					print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
+
+					diccionario = {
+						'fecha' : usuario_admin,
+						'clase' : clase,
+						'color' : color,
+						'texto' : mensaje_textoPlano,
+						'titulo_pagina' : "Inicio",
+						'estado' : obtiene_estado,
+						'nro_dosis' : nro_dosis,
+						'message' : message,
+						}
+
+					return render(request, 'vacunateuc/home.html', diccionario )
+
 		else: # para verficar que no tiene ninguna dosis puesta
 			usuarioactual = request.user
 			username1 = User.objects.get(username = usuarioactual)
