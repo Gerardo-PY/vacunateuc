@@ -27,4 +27,3 @@ class UsuarioVacunaAdmin(admin.ModelAdmin):
 admin.site.register(UsuarioVacuna, UsuarioVacunaAdmin)
 
 admin.site.register(Ciudades)
-
