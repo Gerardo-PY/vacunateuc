@@ -38,6 +38,16 @@
 </nav>
 
 <body>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </ul>
+    {% endif %}
     <div class="container">
       <br>
       <h2>Por favor, escriba correctamente sus datos en los campos existentes.</h2>
@@ -47,14 +57,14 @@
         <!-- inicio formulario original anterior -->
         <div class="col-md-6">
           <label for="validationCustom01" class="form-label">Nombre(s)</label>
-          <input type="text" class="form-control" id="validationCustom01" name="first_name" required>
+          <input type="text" class="form-control" id="validationCustom01" name="first_name" placeholder="Ej. Juan" required>
           <div class="invalid-feedback">
             Este campo es requerido. Por favor, escriba su nombre.
           </div>
         </div>
         <div class="col-md-6">
           <label for="validationCustom02" class="form-label">Apellido(s)</label>
-          <input type="text" class="form-control" id="validationCustom02" name="last_name" required>
+          <input type="text" class="form-control" id="validationCustom02" name="last_name" placeholder="Ej. Pérez" required>
           <div class="invalid-feedback">
             Este campo es requerido. Por favor, escriba su apellido.
           </div>
@@ -62,7 +72,7 @@
         <div class="col-md-6">
           <label for="validationCustomUsername" class="form-label">Numero de documento de identidad</label>
           <div class="input-group has-validation">
-            <input type="number" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="username" required>
+            <input type="number" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="username" placeholder="Ej. 123456" required>
             <div class="invalid-feedback">
               Este campo es requerido. Por favor, digite su documento de identidad.
             </div>
@@ -71,7 +81,7 @@
         <div class="col-md-6">
           <label for="password1" class="form-label">Contraseña</label>
           <div class="input-group has-validation">
-            <input type="password" class="form-control" id="password1" aria-describedby="inputGroupPrepend" name="password1" required>
+            <input type="password" class="form-control" id="password1" aria-describedby="inputGroupPrepend" name="password1" placeholder="Utilice una combinación de mayúsculas, minúsculas, números y símbolos" required>
             <div class="invalid-feedback">
               Este campo es requerido. Por favor, elija una contraseña.
             </div>
@@ -80,7 +90,7 @@
         <div class="col-md-6">
           <label for="validationCustomUsername" class="form-label">Confirmar Contraseña</label>
           <div class="input-group has-validation">
-            <input type="password" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="password2" required>
+            <input type="password" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="password2" placeholder="Repita nuevamente la contraseña ingresada" required>
             <div class="invalid-feedback">
               Este campo es requerido. Por favor, escriba nuevamente una contraseña.
             </div>
@@ -89,10 +99,6 @@
         <div class="col-md-6">
           <label for="datepicker" class="form-label">Fecha de nacimiento</label>
           <div class="input-group has-validation">
-            <div class="input-group-append">
-              <!-- <span class="input-group-text"><i class="fas fa-user fa-1x"></i></span> -->
-              <div class="input-group-text"><i class="bi bi-calendar3"></i></div>
-            </div>
             <input type="date" class="form-control" name="fecha_nac" required></input>
             <!-- <input type="text" class="form-control" id="datepicker" aria-describedby="inputGroupPrepend" name="fecha_nac" required> -->
             <div class="invalid-feedback">
@@ -100,15 +106,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-md-6">
-          <label for="validationCustomUsername" class="form-label">Edad prueba</label>
-          <div class="input-group has-validation">
-            <input type="number" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="fechanac" required>
-            <div class="invalid-feedback">
-              Este campo es requerido. Por favor, digite su edad.
-            </div>
-          </div>
-        </div> -->
         <div class="col-md-6">
           <label for="validationCustom04" class="form-label">Departamento</label>
           <input class="form-control" value="Guaira" name="departamento" disabled required></input>
@@ -136,7 +133,7 @@
         </div>
       </form>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!-- Libreria datepicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -164,22 +161,43 @@
     </script>
     
   </body>
-  <!-- Inicio Footer -->
-  <footer class="footer-pg">
+    <!-- Inicio Footer -->
+    <footer class="footer-pg">
       <footer class="text-center text-white" style="background-color: #164194;">
         <div class="container p-4 pb-0">
-          <section class="logo-footer">
-            <img src="{% static 'vacunateuc/img/VacunateUC-logo-blanco.svg' %}" alt="" width="100" height="100" class="align-middle">
-          </section>
-          <p>Sistema de agendamiendo de vacunación</p>
+          <div class="row justify-content-between">
+            <div class="col align-self-start">
+              <div class="col-izq">
+                <h5 style="color: white;"><i class="bi bi-caret-right-fill"></i> Contactos</h5>
+                <h6 style="color: white;">Facultad de Ciencias y Tecnología</h6>
+                <p><i style="color: white;" class="bi bi-telephone-fill"></i> +595 541 43118 | 41154 | 42670 Int. 131</p>
+                <p><i style="color: white;" class="bi bi-whatsapp"></i> +595 971 46 87 52</p>
+                <p><i style="color: white;" class="bi bi-envelope-fill"></i> info.vacunate@uc.edu.py</p>
+                <p><i style="color: white;" class="bi bi-geo-alt-fill"></i> Edificio Histórico UC (Beato Roque González)</p>
+              </div>
+            </div>
+            <div class="col align-self-end">
+              <img src="{% static 'vacunateuc/img/VacunateUC-logo-blanco.svg' %}" alt="" width="60" height="60" class="align-middle">
+              <p>Sistema de agendamiendo para vacunación</p>
+            </div>
+            <div class="col align-self-start">
+              <div class="col-der">
+                <a href="http://guaira.uc.edu.py/" target="_blank">
+                  <img src="{% static 'vacunateuc/img/UC-Guaira-abreviada.svg' %}" alt="" width="80" height="80" class="align-middle">
+                </a>
+                <br><br>
+                <a class="redes-logo" href="https://www.facebook.com/cyt.guaira" target="_blank"><i class="bi bi-facebook"></i></a> &nbsp;
+                <a class="redes-logo" href="https://www.instagram.com/cyt.guaira/" target="_blank"><i class="bi bi-instagram"></i></a>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.5);">
-          <!-- &copy; {{ current_year }} | Vacunate UC -->
           &copy; {% now "Y" %} | Vacunate UC
         </div>
       </footer>
-  </footer>
-  <!-- Fin Footer -->
+    </footer>
+    <!-- Fin Footer -->
 
 </html>

@@ -11,7 +11,7 @@
                 <select class="form-select" name="tipo_de_enfermedad" id="validationCustom01" required>
                     <option selected disabled value=""> -- Por favor, seleccione una enfermedad --</option>
                     {% for val in tipo_enfermedad %}
-                    <option value="{{ val }}"required>{{ val }}</option>
+                        <option value="{{ val.id }}"required>{{ val }}</option>
                     {% endfor %}
                 </select>
                 <div class="invalid-feedback">
@@ -24,7 +24,7 @@
                 <select class="form-select" name="marca_de_vacuna" id="validationCustom02" required>
                     <option selected disabled value=""> -- Por favor, seleccione una marca de vacuna --</option>
                     {% for val in marca_vacuna %}
-                    <option value="{{ val }}"required>{{ val }}</option>
+                            <option value="{{ val.id }}"required>{{ val.nombre }}</option>
                     {% endfor %}
                 </select>
                 <div class="invalid-feedback">
@@ -78,6 +78,8 @@
 
 
     <script>
+        var valor
+        var valor2 = '1';
         // validacion de campos
         (function () {
         'use strict'
@@ -98,6 +100,14 @@
             }, false)
             })
         })()
+
+        var select = document.querySelector('[id=validationCustom01]');
+        console.log(select)
+        select.addEventListener('change', function() {
+            valor = document.querySelector('[id=validationCustom01] option:checked').value
+            console.log(valor)
+            
+        })
     </script>
         
 {% endblock %}
