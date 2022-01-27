@@ -31,7 +31,6 @@ class UsuarioAdmin(admin.ModelAdmin):
 admin.site.register(Usuario, UsuarioAdmin)
 
 class UsuarioVacunaAdmin(admin.ModelAdmin):
-    readonly_fields = ('obtenerperiodo',)
     list_display = ('usuario','vacuna', 'puesto', 'cantidaddedosis', 'fecha_aplicacion', 'estado',)
     class Media:
         js = (

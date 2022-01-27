@@ -79,7 +79,7 @@ def principal(request):
 			aux2 = Tipo_de_Enfermedad.objects.get(id=id_tipoenfermedad)
 			enfermedad = aux2.nombre # aquí una vez comprobada en el paso anterior la existencia del id_tipoenfermedad, obtenemos el nombre de la enfermedad.
 
-			periodo_dosis = dosis.periodoentredosisdias
+			periodo_dosis = dosis.vacuna.periodoentredosis
 
 			if(enfermedad == "COVID-19"):
 				if (nro_dosis == 1): # para verficar que tiene puesta la primera dosis
@@ -265,7 +265,7 @@ def principal(request):
 			aux2 = Tipo_de_Enfermedad.objects.get(id=id_tipoenfermedad)
 			enfermedad = aux2.nombre # aquí una vez comprobada en el paso anterior la existencia del id_tipoenfermedad, obtenemos el nombre de la enfermedad.
 			
-			periodo_dosis = dosis.periodoentredosisdias
+			periodo_dosis = dosis.vacuna.periodoentredosis
 			
 			if(enfermedad == "COVID-19"):
 
@@ -517,18 +517,26 @@ def solicitud_vacuna(request):
 				print(puestovacunatorio)
 				print(usuarioactual)
 				print("#########################")
-				marca = Vacuna.objects.get(nombre=marcadevacuna)
+				marca = Vacuna.objects.get(id=marcadevacuna)
 				periododosis = marca.periodoentredosis
 				#print(periododosis)
 				instancia = Usuario.objects.get(user = usuarioactual)
 
 				usuario_vacuna = UsuarioVacuna(
 					puesto = Puesto.objects.get(nombre = puestovacunatorio),
-					vacuna = Vacuna.objects.get(nombre = marcadevacuna),
+					vacuna = Vacuna.objects.get(id = marcadevacuna),
 					usuario = instancia,
 					cantidaddedosis = 0,
-					periodoentredosisdias = periododosis
 				)
 				usuario_vacuna.save()
-				return redirect('home')			
+				return redirect('home')
+		else:
+			context = {
+			'titulo_pagina' : "Solicitud de agendamiento", 
+			'tipo_enfermedad' : Tipo_de_Enfermedad.objects.all(),
+			'marca_vacuna' : Vacuna.objects.all(),
+			'puesto_vacunatorio' : Puesto.objects.all(),
+			'title' : 'puesto_vacunatorio',
+			}
+
 		return render(request, 'vacunateuc/solicitudvacuna.html', context)
