@@ -25,7 +25,6 @@ admin.site.register(Tipo_de_Enfermedad, TipoEnfermedadAdmin)
 class VacunaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'tipoenfermedad', 'cantidaddosis', 'periodoentredosis')
 admin.site.register(Vacuna, VacunaAdmin)
-
 class UsuarioAdmin(admin.ModelAdmin):
     list_display = ('user', 'fecha_nac', 'departamento', 'ciudad',)
 admin.site.register(Usuario, UsuarioAdmin)
