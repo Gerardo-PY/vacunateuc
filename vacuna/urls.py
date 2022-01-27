@@ -1,22 +1,4 @@
-# from django.urls import path
-# from .views import login, home
 
-# urlpatterns = [
-#     path('', login, name="login"),
-#     path('home/', home, name="home"),
-# ]
-
-# from django.conf.urls import url
-# from . import views
-# from django.contrib.auth.views import LoginView, logout_then_login
-
-# app_name='accounts'
-
-# urlpatterns = [
-#     url(r'^home/$', views.home , name='home'),
-#     url(r'^$' , LoginView.as_view(template_name='vacunateuc/login.html'))
-
-# ]
 
 from os import name
 from django.conf.urls import include
