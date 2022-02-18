@@ -20,6 +20,8 @@
         <h5>Número de Documento: {{user.username}}</h5>
         <br>
         <h5>Fecha de nacimiento: {{fecha}}</h5>
+        <br>
+        <h5>Ciudad: {{ciudad}}</h5>
       </div>
     </div>
     <br>
@@ -55,9 +57,34 @@
     <h5><i style="color: #164194;" class="bi bi-telephone-fill"></i> +595 541 42670</i></h5>
     <h5><i style="color: #164194" class="bi bi-envelope-fill"></i> info.vacunate@uc.edu.py</h5> -->
 
+   
+    <!-- <b>{{ sigtedosis|date:"M d, Y" }}</b> -->
+    <br>
+    <br>
+    <h1><i class="bi bi-caret-right-fill"></i> Vacunas Disponibles</h1>
+    <hr size="4" style="color: black;">
+    <br>
+
+    <table class="table table-bordered">
+      <thead>
+          <tr>
+              <td>Nombre de la Vacuna</td>
+          </tr>
+      </thead>
+      <tbody>
+        {% for vacuna in vacunas %}
+          <tr>
+              <td>{{vacuna.nombre}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
     <br><br> 
     <h2 style="text-align: center; font-style: italic;">¡Vacunate, así salvamos vidas!</h2>
     <br>
-    <!-- <b>{{ sigtedosis|date:"M d, Y" }}</b> -->
+
+
   </div>
 {% endblock %}

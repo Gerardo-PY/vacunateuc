@@ -51,8 +51,7 @@ def principal(request):
 		nro_usuario = Usuario.objects.get(user_id=id_user)
 		print("Tu id es: " + str(id_user))
 		#print(id_user)
-		usuario_comun = nro_usuario.fecha_nac
-		print("Tu cumpleaños es el: " + str(usuario_comun))
+		print("Tu cumpleaños es el: " + str(nro_usuario.fecha_nac))
 		#print(usuario_comun)
 
 		# verificación dosis
@@ -93,8 +92,9 @@ def principal(request):
 					messages.add_message(request, messages.INFO, "Su siguiente dosis a aplicar está estimada para el: ")
 					print("Usted posee la primera dosis") # mensaje para probar nada mas en consola
 
+					
 					diccionario = {
-						'fecha' : usuario_comun,
+						'fecha' : nro_usuario.fecha_nac,
 						'clase' : clase,
 						'color' : color,
 						'texto' : mensaje_textoPlano,
@@ -102,7 +102,9 @@ def principal(request):
 						'enfermedad' : enfermedad,
 						'nro_dosis' : nro_dosis,
 						'marca' : marca_vacuna,
+						'ciudad' : nro_usuario.ciudad,
 						'titulo_pagina' : "Inicio",
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 					
 					return render(request, 'vacunateuc/home.html', diccionario)
@@ -115,14 +117,16 @@ def principal(request):
 					mensaje_textoPlano = "Usted posee la dosis completa."
 					print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
 					diccionario = {
-						'fecha' : usuario_comun,
+						'fecha' : nro_usuario.fecha_nac,
 						'clase' : clase,
 						'color' : color,
 						'texto' : mensaje_textoPlano,
 						'enfermedad' : enfermedad,
 						'nro_dosis' : nro_dosis,
 						'marca' : marca_vacuna,
+						'ciudad' : nro_usuario.ciudad,
 						'titulo_pagina' : "Inicio",
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -146,14 +150,16 @@ def principal(request):
 					print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 					diccionario = {
-						'fecha' : usuario_comun,
+						'fecha' : nro_usuario.fecha_nac,
 						'clase' : clase,
 						'color' : color,
 						'texto' : mensaje_textoPlano,
 						'titulo_pagina' : "Inicio",
 						'estado' : obtiene_estado,
 						'nro_dosis' : nro_dosis,
+						'ciudad' : nro_usuario.ciudad,
 						'message' : message,
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -165,14 +171,16 @@ def principal(request):
 					mensaje_textoPlano = "Usted posee la dosis completa."
 					print("Usted posee la dosis completa") # mensaje para probar nada mas en consola
 					diccionario = {
-						'fecha' : usuario_comun,
+						'fecha' : nro_usuario.fecha_nac,
 						'clase' : clase,
 						'color' : color,
 						'texto' : mensaje_textoPlano,
 						'enfermedad' : enfermedad,
 						'nro_dosis' : nro_dosis,
 						'marca' : marca_vacuna,
+						'ciudad' : nro_usuario.ciudad,
 						'titulo_pagina' : "Inicio",
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -196,14 +204,16 @@ def principal(request):
 					print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 					diccionario = {
-						'fecha' : usuario_comun,
+						'fecha' : nro_usuario.fecha_nac,
 						'clase' : clase,
 						'color' : color,
 						'texto' : mensaje_textoPlano,
 						'titulo_pagina' : "Inicio",
 						'estado' : obtiene_estado,
 						'nro_dosis' : nro_dosis,
+						'ciudad' : nro_usuario.ciudad,
 						'message' : message,
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -226,12 +236,14 @@ def principal(request):
 			print("Usted aún no posee ninguna dosis") # mensaje para probar nada mas en consola
 
 			diccionario = {
-				'fecha' : usuario_comun,
+				'fecha' : nro_usuario.fecha_nac,
 				'clase' : clase,
 				'color' : color,
 				'texto' : mensaje_textoPlano,
+				'ciudad' : nro_usuario.ciudad,
 				'titulo_pagina' : "Inicio",
-				'estado' : obtiene_estado
+				'estado' : obtiene_estado,
+				'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 				}
 
 			return render(request, 'vacunateuc/home.html', diccionario )
@@ -289,7 +301,9 @@ def principal(request):
 						'enfermedad' : enfermedad,
 						'nro_dosis' : nro_dosis,
 						'marca' : marca_vacuna,
+						'ciudad' : nro_usuario.ciudad,
 						'titulo_pagina' : "Inicio",
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 					
 					return render(request, 'vacunateuc/home.html', diccionario)
@@ -309,7 +323,9 @@ def principal(request):
 						'enfermedad' : enfermedad,
 						'nro_dosis' : nro_dosis,
 						'marca' : marca_vacuna,
+						'ciudad' : nro_usuario.ciudad,
 						'titulo_pagina' : "Inicio",
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -340,7 +356,9 @@ def principal(request):
 						'titulo_pagina' : "Inicio",
 						'estado' : obtiene_estado,
 						'nro_dosis' : nro_dosis,
+						'ciudad' : nro_usuario.ciudad,
 						'message' : message,
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -359,7 +377,9 @@ def principal(request):
 						'enfermedad' : enfermedad,
 						'nro_dosis' : nro_dosis,
 						'marca' : marca_vacuna,
+						'ciudad' : nro_usuario.ciudad,
 						'titulo_pagina' : "Inicio",
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -390,7 +410,9 @@ def principal(request):
 						'titulo_pagina' : "Inicio",
 						'estado' : obtiene_estado,
 						'nro_dosis' : nro_dosis,
+						'ciudad' : nro_usuario.ciudad,
 						'message' : message,
+						'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 						}
 
 					return render(request, 'vacunateuc/home.html', diccionario )
@@ -417,8 +439,10 @@ def principal(request):
 				'clase' : clase,
 				'color' : color,
 				'texto' : mensaje_textoPlano,
+				'ciudad' : nro_usuario.ciudad,
 				'titulo_pagina' : "Inicio",
-				'estado' : obtiene_estado
+				'estado' : obtiene_estado,
+				'vacunas' : Vacuna.objects.filter(cantidaddosis__gt = 0),
 				}
 
 			return render(request, 'vacunateuc/home.html', diccionario )
@@ -540,3 +564,13 @@ def solicitud_vacuna(request):
 			}
 
 		return render(request, 'vacunateuc/solicitudvacuna.html', context)
+
+def informaciones_varias(request):
+	diccionario = {
+		'titulo_pagina': "informaciones",
+		'tipo_enfermedad' : Tipo_de_Enfermedad.objects.all(),
+		'marca_vacuna' : Vacuna.objects.all(),
+		'puesto_vacunatorio' : Puesto.objects.all(),
+		'title' : 'puesto_vacunatorio',
+	}
+	return render(request, 'vacunateuc/informaciones.html', diccionario)		
